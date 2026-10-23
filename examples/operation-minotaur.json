@@ -1,0 +1,824 @@
+{
+ "daedalus": "0.1.0",
+ "exported": "2026-10-23T12:00:00",
+ "case": {
+  "name": "Demo · Operación Minotauro",
+  "notes": "Fictional demo case: every person, domain (.example), IP (documentation ranges) and account here is made up.\n\nTry: Ariadne's thread from 'xlabrysx' to 'minotaur-labs.example', or Analysis → colour by community.",
+  "layout": {}
+ },
+ "entities": [
+  {
+   "id": "person:teo labrys",
+   "type": "person",
+   "value": "Teo Labrys",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": true,
+   "notes": "Fictional subject for the DAEDALUS demo.",
+   "bookmark": ""
+  },
+  {
+   "id": "username:teolabrys",
+   "type": "username",
+   "value": "teolabrys",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": true,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "username:teo.l4brys",
+   "type": "username",
+   "value": "teo.l4brys",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "username:xlabrysx",
+   "type": "username",
+   "value": "xlabrysx",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "account:https://social.example/@teolabrys",
+   "type": "account",
+   "value": "https://social.example/@teolabrys",
+   "props": {
+    "platform": "Mastodon (social.example)",
+    "username": "teolabrys",
+    "display_name": "Teo Labrys",
+    "bio": "Builder of mazes. Coffee & CTFs.",
+    "created": "2018-11-20",
+    "_dates": [
+     [
+      "Mastodon (social.example) account created",
+      "2018-11-20"
+     ]
+    ],
+    "_links": [
+     [
+      "Profile",
+      "https://social.example/@teolabrys"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "account:https://code.example/teolabrys",
+   "type": "account",
+   "value": "https://code.example/teolabrys",
+   "props": {
+    "platform": "CodeHub",
+    "username": "teolabrys",
+    "followers": 214,
+    "public_repos": 31,
+    "created": "2016-08-02",
+    "_dates": [
+     [
+      "CodeHub account created",
+      "2016-08-02"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "account:https://social.example/@teo.l4brys",
+   "type": "account",
+   "value": "https://social.example/@teo.l4brys",
+   "props": {
+    "platform": "Mastodon (social.example)",
+    "username": "teo.l4brys",
+    "created": "2021-02-03",
+    "_dates": [
+     [
+      "Second profile created",
+      "2021-02-03"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "account:https://forum.example/u/xlabrysx",
+   "type": "account",
+   "value": "https://forum.example/u/xlabrysx",
+   "props": {
+    "platform": "Forum.example",
+    "username": "xlabrysx",
+    "bio": "selling access, DM me",
+    "created": "2020-07-15",
+    "_dates": [
+     [
+      "Forum account created",
+      "2020-07-15"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "email:teo@minotaur-labs.example",
+   "type": "email",
+   "value": "teo@minotaur-labs.example",
+   "props": {
+    "commit_author": "Teo Labrys",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "email:t.labrys@knossos-mail.example",
+   "type": "email",
+   "value": "t.labrys@knossos-mail.example",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "domain:minotaur-labs.example",
+   "type": "domain",
+   "value": "minotaur-labs.example",
+   "props": {
+    "registrar": "Example Registrar Inc.",
+    "registered": "2019-03-14",
+    "expires": "2027-03-14",
+    "_dates": [
+     [
+      "Domain registered",
+      "2019-03-14"
+     ],
+     [
+      "Domain expires",
+      "2027-03-14"
+     ]
+    ],
+    "spf": "v=spf1 mx -all",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "domain:knossos-mail.example",
+   "type": "domain",
+   "value": "knossos-mail.example",
+   "props": {
+    "free_provider": false,
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "domain:labyrinth-cdn.example",
+   "type": "domain",
+   "value": "labyrinth-cdn.example",
+   "props": {
+    "registered": "2020-09-01",
+    "_dates": [
+     [
+      "Domain registered",
+      "2020-09-01"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "hostname:mail.minotaur-labs.example",
+   "type": "hostname",
+   "value": "mail.minotaur-labs.example",
+   "props": {
+    "mx_priority": 10,
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "hostname:vpn.minotaur-labs.example",
+   "type": "hostname",
+   "value": "vpn.minotaur-labs.example",
+   "props": {
+    "first_certificate": "2021-05-11",
+    "_dates": [
+     [
+      "First certificate",
+      "2021-05-11"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "hostname:dev.minotaur-labs.example",
+   "type": "hostname",
+   "value": "dev.minotaur-labs.example",
+   "props": {
+    "first_certificate": "2022-01-10",
+    "_dates": [
+     [
+      "First certificate",
+      "2022-01-10"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "ip:203.0.113.17",
+   "type": "ip",
+   "value": "203.0.113.17",
+   "props": {
+    "open_ports": [
+     22,
+     25,
+     443,
+     1194
+    ],
+    "country": "Greece",
+    "isp": "Labyrinth Hosting",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "ip:198.51.100.42",
+   "type": "ip",
+   "value": "198.51.100.42",
+   "props": {
+    "open_ports": [
+     80,
+     8080
+    ],
+    "tags": [
+     "self-signed"
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "ip:192.0.2.80",
+   "type": "ip",
+   "value": "192.0.2.80",
+   "props": {
+    "open_ports": [
+     443
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "netblock:203.0.113.0/24",
+   "type": "netblock",
+   "value": "203.0.113.0/24",
+   "props": {
+    "name": "LABYRINTH-NET-1",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "asn:AS64500",
+   "type": "asn",
+   "value": "AS64500",
+   "props": {
+    "name": "LABYRINTH-NET",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "organization:labyrinth hosting",
+   "type": "organization",
+   "value": "Labyrinth Hosting",
+   "props": {
+    "role": "ISP",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "organization:minotaur labs s.l.",
+   "type": "organization",
+   "value": "Minotaur Labs S.L.",
+   "props": {
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "location:heraklion, crete, greece",
+   "type": "location",
+   "value": "Heraklion, Crete, Greece",
+   "props": {
+    "_lat": 35.3387,
+    "_lon": 25.1442,
+    "precision": "IP geolocation (approximate)",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "location:valencia, spain",
+   "type": "location",
+   "value": "Valencia, Spain",
+   "props": {
+    "_lat": 39.4699,
+    "_lon": -0.3763,
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "url:https://minotaur-labs.example/",
+   "type": "url",
+   "value": "https://minotaur-labs.example/",
+   "props": {
+    "title": "Minotaur Labs — secure routing",
+    "status": 200,
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "url:https://minotaur-labs.example/about",
+   "type": "url",
+   "value": "https://minotaur-labs.example/about",
+   "props": {
+    "title": "About us",
+    "first_archived": "2019-05-02",
+    "_dates": [
+     [
+      "First archived",
+      "2019-05-02"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "url:https://labyrinth-cdn.example/",
+   "type": "url",
+   "value": "https://labyrinth-cdn.example/",
+   "props": {
+    "title": "Labyrinth CDN",
+    "status": 200,
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "tracking_code:G-KN0SS0S123",
+   "type": "tracking_code",
+   "value": "G-KN0SS0S123",
+   "props": {
+    "kind": "Google Analytics 4",
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "phone:+447700900123",
+   "type": "phone",
+   "value": "+447700900123",
+   "props": {
+    "country": "United Kingdom",
+    "line_type": "mobile",
+    "valid": true,
+    "_links": [
+     [
+      "WhatsApp",
+      "https://wa.me/447700900123"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "breach:ExampleForum2021",
+   "type": "breach",
+   "value": "ExampleForum2021",
+   "props": {
+    "title": "Example Forum 2021",
+    "date": "2021-06-01",
+    "records": 480000,
+    "data_classes": [
+     "Email addresses",
+     "Usernames",
+     "Passwords"
+    ],
+    "_dates": [
+     [
+      "Breach: Example Forum 2021",
+      "2021-06-01"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "crypto:bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+   "type": "crypto",
+   "value": "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+   "props": {
+    "chain": "Bitcoin",
+    "balance": "0.04210000 BTC",
+    "tx_count": 37,
+    "last_activity": "2023-09-30",
+    "_dates": [
+     [
+      "Last wallet activity",
+      "2023-09-30"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  },
+  {
+   "id": "vulnerability:CVE-2021-44228",
+   "type": "vulnerability",
+   "value": "CVE-2021-44228",
+   "props": {
+    "cvss": 10.0,
+    "severity": "CRITICAL",
+    "published": "2021-12-10",
+    "_dates": [
+     [
+      "CVE-2021-44228 published",
+      "2021-12-10"
+     ]
+    ],
+    "_sources": [
+     "Demo"
+    ]
+   },
+   "root": false,
+   "notes": "",
+   "bookmark": ""
+  }
+ ],
+ "links": [
+  {
+   "src": "account:https://social.example/@teolabrys",
+   "dst": "person:teo labrys",
+   "label": "name",
+   "transform": "demo"
+  },
+  {
+   "src": "username:teolabrys",
+   "dst": "account:https://social.example/@teolabrys",
+   "label": "has account",
+   "transform": "demo"
+  },
+  {
+   "src": "username:teolabrys",
+   "dst": "account:https://code.example/teolabrys",
+   "label": "has account",
+   "transform": "demo"
+  },
+  {
+   "src": "account:https://code.example/teolabrys",
+   "dst": "email:teo@minotaur-labs.example",
+   "label": "commit email",
+   "transform": "demo"
+  },
+  {
+   "src": "account:https://code.example/teolabrys",
+   "dst": "url:https://minotaur-labs.example/about",
+   "label": "website",
+   "transform": "demo"
+  },
+  {
+   "src": "account:https://code.example/teolabrys",
+   "dst": "location:valencia, spain",
+   "label": "lives in",
+   "transform": "demo"
+  },
+  {
+   "src": "email:teo@minotaur-labs.example",
+   "dst": "domain:minotaur-labs.example",
+   "label": "email domain",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:minotaur-labs.example",
+   "dst": "hostname:mail.minotaur-labs.example",
+   "label": "MX",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:minotaur-labs.example",
+   "dst": "hostname:vpn.minotaur-labs.example",
+   "label": "subdomain",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:minotaur-labs.example",
+   "dst": "hostname:dev.minotaur-labs.example",
+   "label": "subdomain",
+   "transform": "demo"
+  },
+  {
+   "src": "hostname:mail.minotaur-labs.example",
+   "dst": "ip:203.0.113.17",
+   "label": "A",
+   "transform": "demo"
+  },
+  {
+   "src": "hostname:vpn.minotaur-labs.example",
+   "dst": "ip:203.0.113.17",
+   "label": "A",
+   "transform": "demo"
+  },
+  {
+   "src": "hostname:dev.minotaur-labs.example",
+   "dst": "ip:198.51.100.42",
+   "label": "A",
+   "transform": "demo"
+  },
+  {
+   "src": "ip:203.0.113.17",
+   "dst": "netblock:203.0.113.0/24",
+   "label": "in netblock",
+   "transform": "demo"
+  },
+  {
+   "src": "netblock:203.0.113.0/24",
+   "dst": "asn:AS64500",
+   "label": "announced by",
+   "transform": "demo"
+  },
+  {
+   "src": "asn:AS64500",
+   "dst": "organization:labyrinth hosting",
+   "label": "operated by",
+   "transform": "demo"
+  },
+  {
+   "src": "ip:203.0.113.17",
+   "dst": "location:heraklion, crete, greece",
+   "label": "located in",
+   "transform": "demo"
+  },
+  {
+   "src": "ip:203.0.113.17",
+   "dst": "organization:labyrinth hosting",
+   "label": "ISP",
+   "transform": "demo"
+  },
+  {
+   "src": "ip:198.51.100.42",
+   "dst": "vulnerability:CVE-2021-44228",
+   "label": "vulnerable to",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:minotaur-labs.example",
+   "dst": "organization:minotaur labs s.l.",
+   "label": "registrant",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:minotaur-labs.example",
+   "dst": "url:https://minotaur-labs.example/",
+   "label": "website",
+   "transform": "demo"
+  },
+  {
+   "src": "url:https://minotaur-labs.example/",
+   "dst": "tracking_code:G-KN0SS0S123",
+   "label": "uses",
+   "transform": "demo"
+  },
+  {
+   "src": "url:https://minotaur-labs.example/about",
+   "dst": "phone:+447700900123",
+   "label": "mentions",
+   "transform": "demo"
+  },
+  {
+   "src": "url:https://minotaur-labs.example/about",
+   "dst": "account:https://social.example/@teo.l4brys",
+   "label": "links to profile",
+   "transform": "demo"
+  },
+  {
+   "src": "username:teo.l4brys",
+   "dst": "account:https://social.example/@teo.l4brys",
+   "label": "has account",
+   "transform": "demo"
+  },
+  {
+   "src": "email:t.labrys@knossos-mail.example",
+   "dst": "breach:ExampleForum2021",
+   "label": "exposed in",
+   "transform": "demo"
+  },
+  {
+   "src": "email:teo@minotaur-labs.example",
+   "dst": "breach:ExampleForum2021",
+   "label": "exposed in",
+   "transform": "demo"
+  },
+  {
+   "src": "username:xlabrysx",
+   "dst": "account:https://forum.example/u/xlabrysx",
+   "label": "has account",
+   "transform": "demo"
+  },
+  {
+   "src": "account:https://forum.example/u/xlabrysx",
+   "dst": "email:t.labrys@knossos-mail.example",
+   "label": "public email",
+   "transform": "demo"
+  },
+  {
+   "src": "account:https://forum.example/u/xlabrysx",
+   "dst": "crypto:bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",
+   "label": "mentions",
+   "transform": "demo"
+  },
+  {
+   "src": "email:t.labrys@knossos-mail.example",
+   "dst": "domain:knossos-mail.example",
+   "label": "email domain",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:labyrinth-cdn.example",
+   "dst": "url:https://labyrinth-cdn.example/",
+   "label": "website",
+   "transform": "demo"
+  },
+  {
+   "src": "url:https://labyrinth-cdn.example/",
+   "dst": "tracking_code:G-KN0SS0S123",
+   "label": "uses",
+   "transform": "demo"
+  },
+  {
+   "src": "domain:labyrinth-cdn.example",
+   "dst": "ip:192.0.2.80",
+   "label": "A",
+   "transform": "demo"
+  },
+  {
+   "src": "ip:192.0.2.80",
+   "dst": "location:heraklion, crete, greece",
+   "label": "located in",
+   "transform": "demo"
+  },
+  {
+   "src": "person:teo labrys",
+   "dst": "organization:minotaur labs s.l.",
+   "label": "works at",
+   "transform": "manual"
+  }
+ ]
+}

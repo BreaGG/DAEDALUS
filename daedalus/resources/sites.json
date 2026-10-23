@@ -1,0 +1,424 @@
+{
+ "GitHub": {
+  "url": "https://github.com/{}",
+  "errorType": "status_code",
+  "category": "dev",
+  "regexCheck": "^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$"
+ },
+ "GitLab": {
+  "url": "https://gitlab.com/{}",
+  "errorType": "message",
+  "category": "dev",
+  "urlProbe": "https://gitlab.com/api/v4/users?username={}",
+  "errorMsg": "[]"
+ },
+ "Bitbucket": {
+  "url": "https://bitbucket.org/{}/",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Codeberg": {
+  "url": "https://codeberg.org/{}",
+  "errorType": "status_code",
+  "category": "dev",
+  "urlProbe": "https://codeberg.org/api/v1/users/{}"
+ },
+ "Gitee": {
+  "url": "https://gitee.com/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "SourceForge": {
+  "url": "https://sourceforge.net/u/{}/profile",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Launchpad": {
+  "url": "https://launchpad.net/~{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "PyPI": {
+  "url": "https://pypi.org/user/{}/",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "npm": {
+  "url": "https://www.npmjs.com/~{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Docker Hub": {
+  "url": "https://hub.docker.com/u/{}",
+  "errorType": "status_code",
+  "category": "dev",
+  "urlProbe": "https://hub.docker.com/v2/users/{}/"
+ },
+ "Hugging Face": {
+  "url": "https://huggingface.co/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Replit": {
+  "url": "https://replit.com/@{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "DEV Community": {
+  "url": "https://dev.to/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Hashnode": {
+  "url": "https://hashnode.com/@{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Hacker News": {
+  "url": "https://news.ycombinator.com/user?id={}",
+  "errorType": "message",
+  "category": "dev",
+  "errorMsg": "No such user."
+ },
+ "Kaggle": {
+  "url": "https://www.kaggle.com/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Codewars": {
+  "url": "https://www.codewars.com/users/{}",
+  "errorType": "status_code",
+  "category": "dev",
+  "urlProbe": "https://www.codewars.com/api/v1/users/{}"
+ },
+ "CodePen": {
+  "url": "https://codepen.io/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "JSFiddle": {
+  "url": "https://jsfiddle.net/user/{}/",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Keybase": {
+  "url": "https://keybase.io/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Bugcrowd": {
+  "url": "https://bugcrowd.com/{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Trello": {
+  "url": "https://trello.com/{}",
+  "errorType": "status_code",
+  "category": "dev",
+  "urlProbe": "https://trello.com/1/Members/{}"
+ },
+ "Wikipedia": {
+  "url": "https://en.wikipedia.org/wiki/User:{}",
+  "errorType": "message",
+  "category": "dev",
+  "urlProbe": "https://en.wikipedia.org/w/api.php?action=query&list=users&ususers={}&format=json",
+  "errorMsg": "\"missing\""
+ },
+ "Internet Archive": {
+  "url": "https://archive.org/details/@{}",
+  "errorType": "status_code",
+  "category": "dev"
+ },
+ "Reddit": {
+  "url": "https://www.reddit.com/user/{}",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://www.reddit.com/user/{}/about.json",
+  "regexCheck": "^[A-Za-z0-9_-]{3,20}$"
+ },
+ "Mastodon (mastodon.social)": {
+  "url": "https://mastodon.social/@{}",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://mastodon.social/api/v1/accounts/lookup?acct={}"
+ },
+ "Mastodon (infosec.exchange)": {
+  "url": "https://infosec.exchange/@{}",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://infosec.exchange/api/v1/accounts/lookup?acct={}"
+ },
+ "Mastodon (mstdn.social)": {
+  "url": "https://mstdn.social/@{}",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://mstdn.social/api/v1/accounts/lookup?acct={}"
+ },
+ "Bluesky": {
+  "url": "https://bsky.app/profile/{}.bsky.social",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor={}.bsky.social",
+  "regexCheck": "^[A-Za-z0-9-]{3,18}$"
+ },
+ "YouTube": {
+  "url": "https://www.youtube.com/@{}",
+  "errorType": "status_code",
+  "category": "media",
+  "headers": {
+   "Cookie": "CONSENT=YES+1; SOCS=CAI"
+  }
+ },
+ "VK": {
+  "url": "https://vk.com/{}",
+  "errorType": "status_code",
+  "category": "social",
+  "regexCheck": "^[A-Za-z0-9_.]{5,32}$"
+ },
+ "Habr": {
+  "url": "https://habr.com/en/users/{}/",
+  "errorType": "status_code",
+  "category": "social"
+ },
+ "Snapchat": {
+  "url": "https://www.snapchat.com/add/{}",
+  "errorType": "status_code",
+  "category": "social",
+  "regexCheck": "^[a-z][a-z0-9-_.]{2,14}$"
+ },
+ "About.me": {
+  "url": "https://about.me/{}",
+  "errorType": "status_code",
+  "category": "social"
+ },
+ "Linktree": {
+  "url": "https://linktr.ee/{}",
+  "errorType": "status_code",
+  "category": "social"
+ },
+ "Disqus": {
+  "url": "https://disqus.com/by/{}/",
+  "errorType": "status_code",
+  "category": "social"
+ },
+ "Gravatar": {
+  "url": "https://gravatar.com/{}",
+  "errorType": "status_code",
+  "category": "social",
+  "urlProbe": "https://en.gravatar.com/{}.json"
+ },
+ "Myspace": {
+  "url": "https://myspace.com/{}",
+  "errorType": "status_code",
+  "category": "social"
+ },
+ "Medium": {
+  "url": "https://medium.com/@{}",
+  "errorType": "status_code",
+  "category": "media",
+  "urlProbe": "https://medium.com/feed/@{}"
+ },
+ "Substack": {
+  "url": "https://{}.substack.com",
+  "errorType": "status_code",
+  "category": "media",
+  "regexCheck": "^[a-z0-9]{3,40}$"
+ },
+ "Blogger": {
+  "url": "https://{}.blogspot.com",
+  "errorType": "status_code",
+  "category": "media",
+  "regexCheck": "^[a-z0-9-]{3,63}$"
+ },
+ "Wattpad": {
+  "url": "https://www.wattpad.com/user/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Pastebin": {
+  "url": "https://pastebin.com/u/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Slideshare": {
+  "url": "https://www.slideshare.net/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Instructables": {
+  "url": "https://www.instructables.com/member/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Vimeo": {
+  "url": "https://vimeo.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "SoundCloud": {
+  "url": "https://soundcloud.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Bandcamp": {
+  "url": "https://bandcamp.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Mixcloud": {
+  "url": "https://www.mixcloud.com/{}/",
+  "errorType": "status_code",
+  "category": "media",
+  "urlProbe": "https://api.mixcloud.com/{}/"
+ },
+ "Last.fm": {
+  "url": "https://www.last.fm/user/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Flickr": {
+  "url": "https://www.flickr.com/people/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Unsplash": {
+  "url": "https://unsplash.com/@{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "VSCO": {
+  "url": "https://vsco.co/{}/gallery",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Behance": {
+  "url": "https://www.behance.net/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Dribbble": {
+  "url": "https://dribbble.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "DeviantArt": {
+  "url": "https://www.deviantart.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "ArtStation": {
+  "url": "https://www.artstation.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Letterboxd": {
+  "url": "https://letterboxd.com/{}/",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "MyAnimeList": {
+  "url": "https://myanimelist.net/profile/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Genius": {
+  "url": "https://genius.com/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Rumble": {
+  "url": "https://rumble.com/user/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Newgrounds": {
+  "url": "https://{}.newgrounds.com",
+  "errorType": "status_code",
+  "category": "media",
+  "regexCheck": "^[A-Za-z0-9-]{3,20}$"
+ },
+ "Untappd": {
+  "url": "https://untappd.com/user/{}",
+  "errorType": "status_code",
+  "category": "media"
+ },
+ "Steam": {
+  "url": "https://steamcommunity.com/id/{}",
+  "errorType": "message",
+  "category": "gaming",
+  "errorMsg": "The specified profile could not be found."
+ },
+ "Chess.com": {
+  "url": "https://www.chess.com/member/{}",
+  "errorType": "status_code",
+  "category": "gaming",
+  "urlProbe": "https://api.chess.com/pub/player/{}"
+ },
+ "Lichess": {
+  "url": "https://lichess.org/@/{}",
+  "errorType": "status_code",
+  "category": "gaming",
+  "urlProbe": "https://lichess.org/api/user/{}"
+ },
+ "Minecraft": {
+  "url": "https://namemc.com/profile/{}",
+  "errorType": "status_code",
+  "category": "gaming",
+  "urlProbe": "https://api.mojang.com/users/profiles/minecraft/{}",
+  "errorCode": [
+   204,
+   404
+  ]
+ },
+ "osu!": {
+  "url": "https://osu.ppy.sh/users/{}",
+  "errorType": "status_code",
+  "category": "gaming"
+ },
+ "Speedrun.com": {
+  "url": "https://www.speedrun.com/users/{}",
+  "errorType": "status_code",
+  "category": "gaming",
+  "urlProbe": "https://www.speedrun.com/api/v1/users/{}"
+ },
+ "Itch.io": {
+  "url": "https://{}.itch.io/",
+  "errorType": "status_code",
+  "category": "gaming",
+  "regexCheck": "^[a-zA-Z0-9_-]{2,40}$"
+ },
+ "Duolingo": {
+  "url": "https://www.duolingo.com/profile/{}",
+  "errorType": "message",
+  "category": "gaming",
+  "urlProbe": "https://www.duolingo.com/2017-06-30/users?username={}",
+  "errorMsg": "\"users\":[]"
+ },
+ "Patreon": {
+  "url": "https://www.patreon.com/{}",
+  "errorType": "status_code",
+  "category": "money"
+ },
+ "BuyMeACoffee": {
+  "url": "https://buymeacoffee.com/{}",
+  "errorType": "status_code",
+  "category": "money",
+  "regexCheck": "^[a-zA-Z0-9]{3,15}$"
+ },
+ "Open Collective": {
+  "url": "https://opencollective.com/{}",
+  "errorType": "status_code",
+  "category": "money"
+ },
+ "Cash App": {
+  "url": "https://cash.app/${}",
+  "errorType": "status_code",
+  "category": "money",
+  "regexCheck": "^[A-Za-z][A-Za-z0-9_-]{0,19}$"
+ },
+ "Freelancer": {
+  "url": "https://www.freelancer.com/u/{}",
+  "errorType": "status_code",
+  "category": "money"
+ }
+}

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DAEDALUS</title>
+  <meta name="description" content="DAEDALUS · open-source link analysis & OSINT workbench">
+  <meta name="theme-color" content="#0a0d11">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/leaflet.css">
+  <link rel="stylesheet" href="css/daedalus.css?v=__VERSION__">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" title="DAEDALUS">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#10151b"/>
+      <path d="M5 27V5h22v22H9V9h14v14H13V13h6v6h-3" fill="none" stroke="#d6a84f" stroke-width="2" stroke-linecap="square"/>
+      <circle cx="16" cy="16" r="1.6" fill="#e5534b"/></svg>
+    <span class="wordmark">DAEDALUS<small data-i18n="tagline">link analysis · osint</small></span>
+  </a>
+  <div class="case-bar">
+    <select id="caseSelect" data-i18n-title="case_open"></select>
+    <button id="newCaseBtn" class="btn sm" data-i18n="new_case">+ New</button>
+    <button id="caseMenuBtn" class="btn sm icon" data-i18n-title="case_actions">⋯</button>
+  </div>
+  <form id="quickAdd" class="quick-add" autocomplete="off">
+    <input id="quickInput" spellcheck="false" data-i18n-ph="quick_ph">
+    <select id="quickType" data-i18n-title="entity_type"></select>
+    <button type="submit" class="btn sm" data-i18n="add">Add</button>
+    <button type="button" id="quickRun" class="btn sm primary" data-i18n="investigate">Investigate</button>
+  </form>
+  <div class="top-actions">
+    <button id="importBtn" class="btn sm ghost" data-i18n="import">Import</button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <button id="exportBtn" class="btn sm ghost" data-i18n="export">Export ▾</button>
+    <button id="langBtn" class="btn sm ghost" data-i18n-title="lang_switch">ES</button>
+    <button id="settingsBtn" class="btn sm" data-i18n="settings">Settings</button>
+  </div>
+</header>
+
+<main class="workspace" id="workspace">
+  <aside class="palette">
+    <div class="panel-title"><span data-i18n="palette">Entity palette</span></div>
+    <input id="paletteFilter" class="filter" type="search" data-i18n-ph="filter">
+    <div class="panel-scroll">
+      <div id="paletteList"></div>
+      <div class="panel-title"><span data-i18n="machines">Machines</span></div>
+      <div id="machineList"></div>
+      <div class="panel-title"><span data-i18n="image_analysis">Image (EXIF/GPS)</span></div>
+      <label class="upload-zone"><span data-i18n="upload_image">Drop or pick a photo to extract its metadata</span>
+        <input type="file" id="imageInput" accept="image/*" hidden></label>
+    </div>
+  </aside>
+
+  <section class="center">
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab active" data-tab="graph" data-i18n="tab_graph">Graph</button>
+        <button class="tab" data-tab="table" data-i18n="tab_table">Table</button>
+        <button class="tab" data-tab="map" data-i18n="tab_map">Map</button>
+        <button class="tab" data-tab="timeline" data-i18n="tab_timeline">Timeline</button>
+        <button class="tab" data-tab="notes" data-i18n="tab_notes">Notes</button>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="graph-tools" id="graphTools">
+      <select id="layoutSel" data-i18n-title="layout">
+        <option value="organic" data-i18n="layout_organic">Organic</option>
+        <option value="hierarchical" data-i18n="layout_hierarchical">Hierarchical</option>
+        <option value="radial" data-i18n="layout_radial">Radial</option>
+        <option value="circular" data-i18n="layout_circular">Circular</option>
+        <option value="concentric" data-i18n="layout_concentric">Concentric</option>
+        <option value="block" data-i18n="layout_block">Blocks by type</option>
+      </select>
+      <button id="layoutBtn" class="btn sm" data-i18n="relayout">Re-layout</button>
+      <label class="check small muted" data-i18n-title="auto_layout_tip"><input type="checkbox" id="autoLayout" checked> <span data-i18n="auto_layout">auto</span></label>
+      <div class="tb-sep"></div>
+      <button id="ariadneBtn" class="btn sm" data-i18n-title="ariadne_tip">🧵 <span data-i18n="ariadne">Ariadne's thread</span></button>
+      <button id="analysisBtn" class="btn sm" data-i18n-title="analysis_tip">◈ <span data-i18n="analysis">Analysis</span></button>
+      <div class="spacer" style="flex:1"></div>
+      <input id="graphSearch" class="graph-search" type="search" data-i18n-ph="graph_search">
+      </div>
+    </div>
+
+    <div class="views">
+      <div id="graphView" class="view">
+        <div id="cy"></div>
+        <div id="emptyState" class="empty">
+          <div class="inner">
+            <svg class="maze" viewBox="0 0 64 64" fill="none" stroke-width="2.4" stroke-linecap="square">
+              <path class="walls" d="M6 58V6h52v52H14V14h36v36H22V22h20v20H30V30h6"/>
+              <path class="thread" d="M2 62h6V10h44v44H18V18h28v28H26V26h12v12h-6" stroke-linecap="round" stroke-width="1.6"/>
+            </svg>
+            <h2 data-i18n="empty_title">Every labyrinth has a way out</h2>
+            <p data-i18n="empty_p1">Type an alias, email, phone, name, domain, IP, URL, hash or wallet above, or drag an entity from the palette.</p>
+            <p class="muted small" data-i18n="empty_p2">Right-click a node to run transforms. Select two nodes and use Ariadne's thread to find the paths between them.</p>
+          </div>
+        </div>
+        <div id="linkBanner" class="link-mode-banner hidden"></div>
+        <div class="hud">
+          <button id="zoomIn" class="btn sm icon ghost" title="Zoom +">+</button>
+          <button id="zoomOut" class="btn sm icon ghost" title="Zoom −">−</button>
+          <button id="fitBtn" class="btn sm ghost" data-i18n="fit">Fit</button>
+          <button id="pngBtn" class="btn sm ghost">PNG</button>
+          <label class="check small muted" style="padding:0 6px"><input type="checkbox" id="edgeLabels"> <span data-i18n="link_labels">labels</span></label>
+          <span id="graphStats" class="stat"></span>
+        </div>
+        <div id="legend" class="legend"></div>
+
+        <section id="ariadnePanel" class="float-panel hidden">
+          <header><h3>🧵 <span data-i18n="ariadne">Ariadne's thread</span><span class="sub" data-i18n="ariadne_sub">Paths between two entities</span></h3>
+            <button class="btn sm icon ghost" data-close="ariadnePanel">✕</button></header>
+          <div class="body">
+            <div class="field-row"><label data-i18n="origin">Origin</label><div id="ariSrc" class="slot"></div>
+              <button id="ariSrcBtn" class="btn sm icon" data-i18n-title="use_selection">⊙</button></div>
+            <div class="field-row"><label data-i18n="target">Target</label><div id="ariDst" class="slot"></div>
+              <button id="ariDstBtn" class="btn sm icon" data-i18n-title="use_selection">⊙</button></div>
+            <div class="opts">
+              <label><span data-i18n="max_paths">Max paths</span><input id="ariK" type="number" min="1" max="25" value="5"></label>
+              <label><span data-i18n="max_hops">Max hops</span><input id="ariMax" type="number" min="1" max="30" value="8"></label>
+              <label class="check" style="flex-direction:row;grid-column:1/3"><input type="checkbox" id="ariDirected"> <span data-i18n="respect_direction">Follow link direction</span></label>
+            </div>
+            <div class="field-row">
+              <button id="ariSwap" class="btn sm" title="⇄">⇄</button>
+              <button id="ariFind" class="btn sm primary" style="flex:1" data-i18n="find_paths">Find paths</button>
+              <button id="ariClear" class="btn sm ghost" data-i18n="clear">Clear</button>
+            </div>
+            <div id="ariResults" class="rank-list"></div>
+            <div class="section-label" data-i18n="connect_title">Connect selection</div>
+            <p class="muted small" style="margin:0" data-i18n="connect_help">With 2 or more nodes selected, highlights the smallest subgraph joining them.</p>
+            <button id="ariConnect" class="btn sm" data-i18n="connect_btn">Connect selected</button>
+          </div>
+        </section>
+
+        <section id="analysisPanel" class="float-panel hidden">
+          <header><h3>◈ <span data-i18n="analysis">Analysis</span><span class="sub" data-i18n="analysis_sub">The structure of the labyrinth</span></h3>
+            <button id="anRefresh" class="btn sm" data-i18n="compute">Compute</button>
+            <button class="btn sm icon ghost" data-close="analysisPanel">✕</button></header>
+          <div class="body" id="analysisBody"></div>
+        </section>
+      </div>
+
+      <div id="tableView" class="view hidden">
+        <div class="table-tools">
+          <input id="tableFilter" type="search" data-i18n-ph="table_filter">
+          <select id="tableType"></select>
+          <button id="tableDelete" class="btn sm danger" disabled data-i18n="delete_marked">Delete checked</button>
+        </div>
+        <div class="table-wrap"><table id="entityTable" class="grid"></table></div>
+      </div>
+      <div id="mapView" class="view hidden"><div id="map"></div><div id="mapEmpty" class="view-empty hidden" data-i18n="map_empty">No entities with coordinates in this investigation.</div></div>
+      <div id="timelineView" class="view hidden"><div id="timeline" class="timeline"></div></div>
+      <div id="notesView" class="view hidden"><textarea id="notesArea" data-i18n-ph="notes_ph"></textarea></div>
+    </div>
+
+    <section id="console" class="console">
+      <header>
+        <span class="title" data-i18n="output">Output</span>
+        <div class="progress" id="jobProgress"></div>
+        <button id="cancelJobs" class="btn sm ghost hidden" data-i18n="cancel">Cancel</button>
+        <button id="clearLog" class="btn sm ghost" data-i18n="clear">Clear</button>
+        <button id="toggleConsole" class="btn sm icon ghost" title="▾">▾</button>
+      </header>
+      <div id="log" class="log"></div>
+    </section>
+  </section>
+
+  <aside class="inspector">
+    <div class="insp-tabs">
+      <button class="tab active" data-itab="detail" data-i18n="detail">Detail</button>
+      <button class="tab" data-itab="transforms" data-i18n="transforms">Transforms</button>
+    </div>
+    <div class="panel-scroll">
+      <div id="detailPane" class="insp-body"></div>
+      <div id="transformPane" class="insp-body hidden"></div>
+    </div>
+  </aside>
+</main>
+
+<div id="ctxMenu" class="ctx-menu hidden"></div>
+<div id="toast" class="toast"></div>
+
+<dialog id="entityDlg">
+  <form method="dialog">
+    <div class="dlg-head"><h2 data-i18n="new_entity">New entity</h2></div>
+    <div class="dlg-body">
+      <label class="f"><span data-i18n="entity_type">Type</span><select id="entType"></select></label>
+      <label class="f"><span data-i18n="value">Value</span><input id="entValue" spellcheck="false" required></label>
+      <label class="f" id="entLabelRow"><span data-i18n="link_label">Link label</span><input id="entLabel" value="related"></label>
+      <label class="f"><span data-i18n="notes">Notes</span><textarea id="entNotes" rows="2"></textarea></label>
+    </div>
+    <div class="dlg-foot">
+      <button value="ok" class="btn primary" data-i18n="create">Create</button>
+      <button value="cancel" class="btn ghost" formnovalidate data-i18n="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="promptDlg">
+  <form method="dialog">
+    <div class="dlg-head"><h2 id="promptTitle"></h2><p id="promptText"></p></div>
+    <div class="dlg-body"><input id="promptInput" spellcheck="false"></div>
+    <div class="dlg-foot">
+      <button value="ok" class="btn primary" id="promptOk">OK</button>
+      <button value="cancel" class="btn ghost" formnovalidate data-i18n="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="settingsDlg">
+  <form method="dialog" id="settingsForm">
+    <div class="dlg-head"><h2 data-i18n="settings">Settings</h2>
+      <p data-i18n="settings_sub">Everything is stored on your machine, in the DAEDALUS data folder.</p></div>
+    <div class="dlg-tabs" role="tablist">
+      <button type="button" class="tab active" role="tab" data-stab="general" data-i18n="set_tab_general">General</button>
+      <button type="button" class="tab" role="tab" data-stab="keys" data-i18n="api_keys">API keys</button>
+      <button type="button" class="tab" role="tab" data-stab="language" data-i18n="set_tab_language">Language</button>
+    </div>
+    <div class="dlg-body">
+      <section class="spane" data-spane="general">
+        <div class="grid2">
+          <label class="f"><span data-i18n="set_limit">Max results per transform</span>
+            <select name="result_limit"><option>12</option><option>50</option><option>255</option><option>1000</option></select></label>
+          <label class="f"><span data-i18n="set_machine">Max entities per machine</span><input name="machine_max_entities" type="number" min="1" max="2000"></label>
+          <label class="f"><span data-i18n="set_timeout">Per-site timeout in the alias sweep (s)</span><input name="username_timeout" type="number" min="3" max="60"></label>
+          <label class="f"><span data-i18n="set_region">Default country for phones (ISO, e.g. US, ES)</span><input name="default_region" maxlength="2" style="text-transform:uppercase"></label>
+        </div>
+        <label class="check"><input type="checkbox" name="sherlock_db"> <span data-i18n="set_sherlock">Extend the alias sweep with the Sherlock database (400+ sites)</span></label>
+        <label class="check"><input type="checkbox" name="include_nsfw"> <span data-i18n="set_nsfw">Include adult sites in the sweep</span></label>
+        <label class="check"><input type="checkbox" name="block_private_targets"> <span data-i18n="set_ssrf">Block private addresses in web transforms (recommended)</span></label>
+        <label class="check"><input type="checkbox" id="setImages"> <span data-i18n="set_images">Load remote images (avatars) automatically</span></label>
+      </section>
+      <section class="spane hidden" data-spane="keys">
+        <p class="muted small" style="margin:0" data-i18n="api_keys_help">All optional. Without a key, the transform that needs it is skipped.</p>
+        <div id="keysList"></div>
+      </section>
+      <section class="spane hidden" data-spane="language">
+        <h3 data-i18n="lang_title">Interface language</h3>
+        <p class="muted small" style="margin:0" data-i18n="lang_help">Choose the language of DAEDALUS. It is saved in this installation's settings.</p>
+        <div class="lang-options" id="langOptions"></div>
+        <p class="muted small" style="margin:0" data-i18n="lang_note">Data returned by the sources (page titles, profiles, descriptions…) is shown in its original language.</p>
+      </section>
+    </div>
+    <div class="dlg-foot">
+      <button value="save" class="btn primary" data-i18n="save">Save</button>
+      <button value="cancel" class="btn ghost" formnovalidate data-i18n="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="vendor/cytoscape.min.js"></script>
+<script src="vendor/layout-base.js"></script>
+<script src="vendor/cose-base.js"></script>
+<script src="vendor/cytoscape-fcose.js"></script>
+<script src="vendor/dagre.min.js"></script>
+<script src="vendor/cytoscape-dagre.js"></script>
+<script src="vendor/leaflet.js"></script>
+<script type="module" src="js/main.js?v=__VERSION__"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Railway deployment. Before the first deploy, in the service settings:
+#   1. Variables: DAEDALUS_PASSWORD = a long random string (the app refuses to start on Railway without it)
+#   2. Attach a Volume (any mount path, e.g. /data) so cases survive redeploys
+#   3. Networking: generate a public domain
+# Details: README.md → "Deploy on Railway".
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+# jobs and the SQLite database live in one process: never scale out, never sleep
+numReplicas = 1
+sleepApplication = false

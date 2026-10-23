@@ -1,0 +1,13 @@
+services:
+  daedalus:
+    build: .
+    image: daedalus-osint:latest
+    container_name: daedalus
+    # Only reachable from this machine. If you publish it on a network, set DAEDALUS_PASSWORD.
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      DAEDALUS_PASSWORD: ${DAEDALUS_PASSWORD:-}
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
