@@ -1,5 +1,5 @@
 // Secondary views: entity table, map, timeline and case notes.
-import { S, typeInfo, degree } from "./state.js";
+import { S, typeInfo, degree, BOOKMARK_COLORS } from "./state.js";
 import * as G from "./graph.js";
 import { $, esc, debounce, dateTime, short, api } from "./util.js";
 import { L as label, t } from "./i18n.js";
@@ -51,7 +51,7 @@ export function renderTable() {
       return `<tr data-id="${esc(e.id)}" class="${sel.has(e.id) ? "sel" : ""}">
         <td><input type="checkbox" data-mark="${esc(e.id)}" ${marked.has(e.id) ? "checked" : ""}></td>
         <td><span class="tcell" style="color:${info.color}">${iconSvg(e.type, info.color, 14)}<span style="color:var(--text)">${esc(label(info.label))}</span></span></td>
-        <td title="${esc(e.value)}">${e.bookmark ? "● " : ""}${esc(short(e.label, 80))}${e.root ? ` <span class="root-tag" style="color:var(--gold)">★</span>` : ""}</td>
+        <td title="${esc(e.value)}">${e.bookmark ? `<span class="bm-dot" style="background:${BOOKMARK_COLORS[e.bookmark]}"></span>` : ""}${esc(short(e.label, 80))}${e.root ? ` <span class="root-tag">${esc(t("root"))}</span>` : ""}</td>
         <td class="mono">${degree(e.id)}</td>
         <td class="muted">${esc((e.props._sources || []).join(", "))}</td>
         <td class="muted mono">${esc(dateTime(e.created))}</td></tr>`;

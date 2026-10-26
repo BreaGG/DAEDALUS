@@ -3,7 +3,7 @@ import { S, hooks, typeInfo, transformsFor, machinesFor, BOOKMARK_COLORS } from 
 import * as G from "./graph.js";
 import { $, api, esc, safeUrl, short, toast } from "./util.js";
 import { L, t } from "./i18n.js";
-import { iconSvg } from "./icons.js";
+import { iconSvg, uiIcon } from "./icons.js";
 import { runTransforms, runMachine } from "./jobs.js";
 import { entityDialog } from "./dialogs.js";
 import * as A from "./actions.js";
@@ -18,8 +18,8 @@ function renderItems(items) {
     const idx = actions.push(it.action || null) - 1;
     const sub = it.sub && it.sub.length ? `<div class="ctx-sub">${renderItems(it.sub)}</div>` : "";
     return `<div class="ctx-item ${it.disabled ? "disabled" : ""} ${it.danger ? "danger" : ""}" data-idx="${idx}" ${it.title ? `title="${esc(it.title)}"` : ""}>
-      <span style="width:16px;text-align:center">${it.icon || ""}</span><span class="lbl">${esc(it.label)}</span>
-      ${it.hint ? `<span class="hint">${esc(it.hint)}</span>` : ""}${sub ? '<span class="arrow">▸</span>' : ""}${sub}</div>`;
+      <span class="mi">${it.icon || ""}</span><span class="lbl">${esc(it.label)}</span>
+      ${it.hint ? `<span class="hint">${it.locked ? uiIcon("key", 11) : ""}${esc(it.hint)}</span>` : ""}${sub ? `<span class="arrow">${uiIcon("right", 12)}</span>` : ""}${sub}</div>`;
   }).join("");
 }
 
@@ -80,11 +80,11 @@ function transformItems(ids, types) {
   for (const tr of list) (byCat[tr.category] ||= []).push(tr);
   return Object.entries(byCat).map(([cat, items]) => ({
     label: L(S.meta.transform_categories[cat]) || cat,
-    icon: "›",
+    icon: "",
     sub: items.map((tr) => ({
       label: L(tr.title),
       title: L(tr.description),
-      hint: tr.ready ? "" : `🔑 ${tr.keys.join(", ")}`,
+      hint: tr.ready ? "" : tr.keys.join(", "), locked: !tr.ready,
       action: tr.ready ? () => runTransforms(ids, [tr.name]) : () => hooks.openSettings("keys"),
     })),
   }));
@@ -98,35 +98,35 @@ export function nodeMenu(ev, ids) {
   const nDefault = transformsFor(types).filter((x) => x.default).length;
   const machines = machinesFor(types);
   const items = [
-    { label: t("run_all_n", { n: nDefault }), icon: "▶", action: () => runTransforms(ids, null), disabled: !nDefault },
+    { label: t("run_all_n", { n: nDefault }), icon: uiIcon("play", 12), action: () => runTransforms(ids, null), disabled: !nDefault },
     ...transformItems(ids, types),
   ];
   if (machines.length) {
-    items.push({ label: t("machines_menu"), icon: "⚙", sub: machines.map((m) => ({
+    items.push({ label: t("machines_menu"), icon: uiIcon("cpu"), sub: machines.map((m) => ({
       label: L(m.title), title: L(m.description), action: () => runMachine(ids, m.name, 2) })) });
   }
   items.push({ sep: true });
   if (single) {
-    items.push({ label: t("ari_from"), icon: "🧵", action: () => setEnd("src", single.id) });
-    items.push({ label: t("ari_to"), icon: "◎", action: () => setEnd("dst", single.id) });
+    items.push({ label: t("ari_from"), icon: uiIcon("thread"), action: () => setEnd("src", single.id) });
+    items.push({ label: t("ari_to"), icon: uiIcon("target"), action: () => setEnd("dst", single.id) });
   } else {
-    items.push({ label: t("connect_btn"), icon: "🧵", action: () => connectSelection() });
+    items.push({ label: t("connect_btn"), icon: uiIcon("thread"), action: () => connectSelection() });
   }
-  items.push({ label: t("select_neighbors"), icon: "⊕", action: () => G.selectNeighbors(ids) });
-  items.push({ label: t("focus"), icon: "◉", action: () => G.focusOn(ids) });
+  items.push({ label: t("select_neighbors"), icon: uiIcon("neighbors"), action: () => G.selectNeighbors(ids) });
+  items.push({ label: t("focus"), icon: uiIcon("focus"), action: () => G.focusOn(ids) });
   if (single) {
-    items.push({ label: t("similar"), icon: "≈", action: () => showSimilar(single.id) });
-    items.push({ label: t("link_to"), icon: "↗", action: () => A.startLinkMode(single.id) });
-    items.push({ label: t("edit_value"), icon: "✎", action: () => A.editValue(single.id) });
+    items.push({ label: t("similar"), icon: uiIcon("similar"), action: () => showSimilar(single.id) });
+    items.push({ label: t("link_to"), icon: uiIcon("link"), action: () => A.startLinkMode(single.id) });
+    items.push({ label: t("edit_value"), icon: uiIcon("edit"), action: () => A.editValue(single.id) });
   }
-  if (!single && types.length === 1) items.push({ label: t("merge"), icon: "⧉", action: () => A.mergeEntities(ids) });
-  items.push({ label: t("bookmark"), icon: "●", sub: A.BOOKMARKS.map((c) => ({
-    label: c || "—", icon: c ? `<span style="color:${BOOKMARK_COLORS[c]}">●</span>` : "○", action: () => A.setBookmark(ids, c) })) });
-  items.push({ label: t("copy_value"), icon: "⧉", action: () => A.copyValues(ids) });
+  if (!single && types.length === 1) items.push({ label: t("merge"), icon: uiIcon("merge"), action: () => A.mergeEntities(ids) });
+  items.push({ label: t("bookmark"), icon: uiIcon("flag"), sub: A.BOOKMARKS.map((c) => ({
+    label: c || "—", icon: c ? `<span class="bm-dot" style="background:${BOOKMARK_COLORS[c]}"></span>` : '<span class="bm-dot none"></span>', action: () => A.setBookmark(ids, c) })) });
+  items.push({ label: t("copy_value"), icon: uiIcon("copy"), action: () => A.copyValues(ids) });
   const url = single && safeUrl(single.value) && ["url", "account"].includes(single.type) ? single.value : null;
-  if (url) items.push({ label: t("open_link"), icon: "↗", action: () => window.open(url, "_blank", "noopener,noreferrer") });
+  if (url) items.push({ label: t("open_link"), icon: uiIcon("link"), action: () => window.open(url, "_blank", "noopener,noreferrer") });
   items.push({ sep: true });
-  items.push({ label: single ? t("delete") : t("delete_n", { n: ents.length }), icon: "✕", danger: true,
+  items.push({ label: single ? t("delete") : t("delete_n", { n: ents.length }), icon: uiIcon("trash"), danger: true,
     action: () => A.deleteEntities(ids, { ask: ids.length > 1 }) });
   openMenu(ev, { head: single ? head(single) : `<span class="lbl">${esc(t("n_selected", { n: ents.length }))}</span>`, items });
 }
@@ -151,10 +151,10 @@ export function edgeMenu(ev, data) {
   openMenu(ev, {
     head: `<span class="lbl">${esc(short(a?.label || "", 18))} → ${esc(data.label)} → ${esc(short(b?.label || "", 18))}</span>`,
     items: [
-      { label: t("select_neighbors"), icon: "⊕", action: () => G.selectIds([link.src, link.dst]) },
-      { label: t("edit_link"), icon: "✎", action: () => A.relabelLink(link) },
+      { label: t("select_neighbors"), icon: uiIcon("neighbors"), action: () => G.selectIds([link.src, link.dst]) },
+      { label: t("edit_link"), icon: uiIcon("edit"), action: () => A.relabelLink(link) },
       { sep: true },
-      { label: t("delete_link"), icon: "✕", danger: true, action: () => A.deleteLink(link) },
+      { label: t("delete_link"), icon: uiIcon("trash"), danger: true, action: () => A.deleteLink(link) },
     ],
   });
 }
@@ -173,12 +173,12 @@ export function canvasMenu(ev, pos) {
     }
   }
   openMenu(ev, { items: [
-    { label: t("add_here"), icon: "+", sub },
-    { label: t("select_all"), icon: "▣", action: () => G.cy.nodes(":visible").select() },
+    { label: t("add_here"), icon: uiIcon("plus"), sub },
+    { label: t("select_all"), icon: uiIcon("select"), action: () => G.cy.nodes(":visible").select() },
     { sep: true },
-    { label: t("relayout"), icon: "⟲", action: () => G.runLayout(S.layoutName) },
-    { label: t("fit"), icon: "⤢", action: () => G.fit() },
-    { label: t("clear"), icon: "✧", action: () => G.clearHighlight() },
+    { label: t("relayout"), icon: uiIcon("refresh"), action: () => G.runLayout(S.layoutName) },
+    { label: t("fit"), icon: uiIcon("fit"), action: () => G.fit() },
+    { label: t("clear"), icon: uiIcon("eraser"), action: () => G.clearHighlight() },
   ] });
 }
 
@@ -193,19 +193,19 @@ export function exportMenu(ev) {
     a.remove();
   };
   openMenu(ev, { items: [
-    { label: t("export_json"), icon: "{}", action: dl("json") },
-    { label: t("export_graphml"), icon: "⋔", action: dl("graphml") },
-    { label: t("export_csv"), icon: "▤", action: dl("csv") },
-    { label: t("export_links"), icon: "⇄", action: dl("links-csv") },
+    { label: t("export_json"), icon: uiIcon("file"), action: dl("json") },
+    { label: t("export_graphml"), icon: uiIcon("graph"), action: dl("graphml") },
+    { label: t("export_csv"), icon: uiIcon("table"), action: dl("csv") },
+    { label: t("export_links"), icon: uiIcon("swap"), action: dl("links-csv") },
     { sep: true },
-    { label: t("export_png"), icon: "▧", action: () => G.exportPng(`daedalus_${(S.case?.name || "case").replace(/\W+/g, "_")}`) },
+    { label: t("export_png"), icon: uiIcon("photo"), action: () => G.exportPng(`daedalus_${(S.case?.name || "case").replace(/\W+/g, "_")}`) },
   ] });
 }
 
 export function caseMenu(ev, { rename, remove }) {
   openMenu(ev, { items: [
-    { label: t("rename_case"), icon: "✎", action: rename },
+    { label: t("rename_case"), icon: uiIcon("edit"), action: rename },
     { sep: true },
-    { label: t("delete_case"), icon: "✕", danger: true, action: remove },
+    { label: t("delete_case"), icon: uiIcon("trash"), danger: true, action: remove },
   ] });
 }

@@ -38,3 +38,48 @@ export function iconUri(type, color) {
   }
   return uriCache.get(key);
 }
+
+// Interface glyphs (same 24x24 stroke grid) — used instead of emoji/unicode symbols in buttons and menus.
+const U = {
+  play: '<path d="M7 4.5v15l12-7.5z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  minus: '<path d="M5 12h14"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  more: '<path d="M5 12h.01M12 12h.01M19 12h.01" stroke-width="3"/>',
+  down: '<path d="m6 9 6 6 6-6"/>',
+  up: '<path d="m6 15 6-6 6 6"/>',
+  right: '<path d="m9 6 6 6-6 6"/>',
+  thread: '<circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M6.5 17.5C10 15 7 11 11 9.5s4.5-2 6.5-3"/>',
+  graph: '<circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M10.9 7.1 6.1 15.9M13.1 7.1l4.8 8.8M7.3 18h9.4"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+  copy: '<rect x="8.5" y="8.5" width="11.5" height="11.5" rx="1"/><path d="M15.5 8.5V4H4v11.5h4.5"/>',
+  link: '<path d="M7 17 17 7M9 7h8v8"/>',
+  key: '<circle cx="7.5" cy="15.5" r="3.5"/><path d="m10 13 9.5-9.5M16 7l2.5 2.5M18 5l2 2"/>',
+  cpu: '<rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/>',
+  swap: '<path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>',
+  crosshair: '<circle cx="12" cy="12" r="7"/><path d="M12 2.5V7M12 17v4.5M2.5 12H7M17 12h4.5"/>',
+  target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>',
+  focus: '<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><circle cx="12" cy="12" r="2.5"/>',
+  fit: '<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',
+  download: '<path d="M12 4v11M7 10l5 5 5-5M4 20h16"/>',
+  upload: '<path d="M12 16V5M7 10l5-5 5 5M4 20h16"/>',
+  sliders: '<path d="M4 6h10M18 6h2M4 12h3M11 12h9M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
+  refresh: '<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/>',
+  flag: '<path d="M5 21V4h12l-2.5 4.5L17 13H5"/>',
+  select: '<path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4M10.5 4h3M10.5 20h3M4 10.5v3M20 10.5v3"/>',
+  table: '<rect x="3.5" y="4.5" width="17" height="15" rx="1"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15"/>',
+  file: '<path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/>',
+  photo: '<rect x="3.5" y="4.5" width="17" height="15" rx="1"/><circle cx="9" cy="10" r="1.8"/><path d="m20.5 16-5-5-8 8.5"/>',
+  trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  merge: '<path d="M7 4v4l5 5v7M17 4v4l-5 5"/>',
+  similar: '<circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/>',
+  neighbors: '<circle cx="12" cy="12" r="2.5"/><circle cx="4.5" cy="6" r="1.8"/><circle cx="19.5" cy="6" r="1.8"/><circle cx="12" cy="20.5" r="1.8"/><path d="M10.1 10.5 6 7.2M13.9 10.5 18 7.2M12 14.5v4.2"/>',
+  eraser: '<path d="M9 20h11M5.5 15.5 14 7l5 5-8 8H9.5z"/>',
+  search: '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+};
+
+export function uiIcon(name, size = 14, stroke = 1.8) {
+  return `<svg class="ui-ico" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${U[name] || ""}</svg>`;
+}

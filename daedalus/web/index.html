@@ -20,21 +20,22 @@
   </a>
   <div class="case-bar">
     <select id="caseSelect" data-i18n-title="case_open"></select>
-    <button id="newCaseBtn" class="btn sm" data-i18n="new_case">+ New</button>
-    <button id="caseMenuBtn" class="btn sm icon" data-i18n-title="case_actions">⋯</button>
+    <button id="newCaseBtn" class="btn sm" data-i18n-title="new_case"><i data-ico="plus"></i><span data-i18n="new_case">New</span></button>
+    <button id="caseMenuBtn" class="btn sm icon" data-i18n-title="case_actions"><i data-ico="more"></i></button>
   </div>
   <form id="quickAdd" class="quick-add" autocomplete="off">
     <input id="quickInput" spellcheck="false" data-i18n-ph="quick_ph">
     <select id="quickType" data-i18n-title="entity_type"></select>
-    <button type="submit" class="btn sm" data-i18n="add">Add</button>
-    <button type="button" id="quickRun" class="btn sm primary" data-i18n="investigate">Investigate</button>
+    <button type="submit" class="btn sm" data-i18n-title="add"><i data-ico="plus"></i><span data-i18n="add">Add</span></button>
+    <button type="button" id="quickRun" class="btn sm primary"><i data-ico="play"></i><span data-i18n="investigate">Investigate</span></button>
   </form>
   <div class="top-actions">
-    <button id="importBtn" class="btn sm ghost" data-i18n="import">Import</button>
+    <button id="importBtn" class="btn sm ghost"><i data-ico="upload"></i><span data-i18n="import">Import</span></button>
     <input type="file" id="importFile" accept=".json,application/json" hidden>
-    <button id="exportBtn" class="btn sm ghost" data-i18n="export">Export ▾</button>
-    <button id="langBtn" class="btn sm ghost" data-i18n-title="lang_switch">ES</button>
-    <button id="settingsBtn" class="btn sm" data-i18n="settings">Settings</button>
+    <button id="exportBtn" class="btn sm ghost"><i data-ico="download"></i><span data-i18n="export">Export</span></button>
+    <span class="tb-sep"></span>
+    <button id="langBtn" class="btn sm ghost mono" data-i18n-title="lang_switch">ES</button>
+    <button id="settingsBtn" class="btn sm icon ghost" data-i18n-title="settings"><i data-ico="sliders"></i></button>
   </div>
 </header>
 
@@ -47,7 +48,7 @@
       <div class="panel-title"><span data-i18n="machines">Machines</span></div>
       <div id="machineList"></div>
       <div class="panel-title"><span data-i18n="image_analysis">Image (EXIF/GPS)</span></div>
-      <label class="upload-zone"><span data-i18n="upload_image">Drop or pick a photo to extract its metadata</span>
+      <label class="upload-zone"><i data-ico="photo"></i><span data-i18n="upload_image">Drop or pick a photo to extract its metadata</span>
         <input type="file" id="imageInput" accept="image/*" hidden></label>
     </div>
   </aside>
@@ -71,13 +72,13 @@
         <option value="concentric" data-i18n="layout_concentric">Concentric</option>
         <option value="block" data-i18n="layout_block">Blocks by type</option>
       </select>
-      <button id="layoutBtn" class="btn sm" data-i18n="relayout">Re-layout</button>
+      <button id="layoutBtn" class="btn sm icon" data-i18n-title="relayout"><i data-ico="refresh"></i></button>
       <label class="check small muted" data-i18n-title="auto_layout_tip"><input type="checkbox" id="autoLayout" checked> <span data-i18n="auto_layout">auto</span></label>
       <div class="tb-sep"></div>
-      <button id="ariadneBtn" class="btn sm" data-i18n-title="ariadne_tip">🧵 <span data-i18n="ariadne">Ariadne's thread</span></button>
-      <button id="analysisBtn" class="btn sm" data-i18n-title="analysis_tip">◈ <span data-i18n="analysis">Analysis</span></button>
-      <div class="spacer" style="flex:1"></div>
-      <input id="graphSearch" class="graph-search" type="search" data-i18n-ph="graph_search">
+      <button id="ariadneBtn" class="btn sm" data-i18n-title="ariadne_tip"><i data-ico="thread"></i><span data-i18n="ariadne">Ariadne's thread</span></button>
+      <button id="analysisBtn" class="btn sm" data-i18n-title="analysis_tip"><i data-ico="graph"></i><span data-i18n="analysis">Analysis</span></button>
+      <div class="spacer"></div>
+      <label class="search-box"><i data-ico="search"></i><input id="graphSearch" class="graph-search" type="search" data-i18n-ph="graph_search"></label>
       </div>
     </div>
 
@@ -97,44 +98,46 @@
         </div>
         <div id="linkBanner" class="link-mode-banner hidden"></div>
         <div class="hud">
-          <button id="zoomIn" class="btn sm icon ghost" title="Zoom +">+</button>
-          <button id="zoomOut" class="btn sm icon ghost" title="Zoom −">−</button>
-          <button id="fitBtn" class="btn sm ghost" data-i18n="fit">Fit</button>
-          <button id="pngBtn" class="btn sm ghost">PNG</button>
-          <label class="check small muted" style="padding:0 6px"><input type="checkbox" id="edgeLabels"> <span data-i18n="link_labels">labels</span></label>
+          <button id="zoomIn" class="btn sm icon ghost" title="Zoom +"><i data-ico="plus"></i></button>
+          <button id="zoomOut" class="btn sm icon ghost" title="Zoom −"><i data-ico="minus"></i></button>
+          <button id="fitBtn" class="btn sm icon ghost" data-i18n-title="fit"><i data-ico="fit"></i></button>
+          <button id="pngBtn" class="btn sm icon ghost" title="PNG"><i data-ico="photo"></i></button>
+          <span class="hud-sep"></span>
+          <label class="check small muted"><input type="checkbox" id="edgeLabels"> <span data-i18n="link_labels">labels</span></label>
+          <span class="hud-sep"></span>
           <span id="graphStats" class="stat"></span>
         </div>
         <div id="legend" class="legend"></div>
 
         <section id="ariadnePanel" class="float-panel hidden">
-          <header><h3>🧵 <span data-i18n="ariadne">Ariadne's thread</span><span class="sub" data-i18n="ariadne_sub">Paths between two entities</span></h3>
-            <button class="btn sm icon ghost" data-close="ariadnePanel">✕</button></header>
+          <header><h3><i data-ico="thread"></i><span><span data-i18n="ariadne">Ariadne's thread</span><span class="sub" data-i18n="ariadne_sub">Paths between two entities</span></span></h3>
+            <button class="btn sm icon ghost" data-close="ariadnePanel"><i data-ico="x"></i></button></header>
           <div class="body">
             <div class="field-row"><label data-i18n="origin">Origin</label><div id="ariSrc" class="slot"></div>
-              <button id="ariSrcBtn" class="btn sm icon" data-i18n-title="use_selection">⊙</button></div>
+              <button id="ariSrcBtn" class="btn sm icon" data-i18n-title="use_selection"><i data-ico="crosshair"></i></button></div>
             <div class="field-row"><label data-i18n="target">Target</label><div id="ariDst" class="slot"></div>
-              <button id="ariDstBtn" class="btn sm icon" data-i18n-title="use_selection">⊙</button></div>
+              <button id="ariDstBtn" class="btn sm icon" data-i18n-title="use_selection"><i data-ico="crosshair"></i></button></div>
             <div class="opts">
               <label><span data-i18n="max_paths">Max paths</span><input id="ariK" type="number" min="1" max="25" value="5"></label>
               <label><span data-i18n="max_hops">Max hops</span><input id="ariMax" type="number" min="1" max="30" value="8"></label>
-              <label class="check" style="flex-direction:row;grid-column:1/3"><input type="checkbox" id="ariDirected"> <span data-i18n="respect_direction">Follow link direction</span></label>
+              <label class="check span2"><input type="checkbox" id="ariDirected"> <span data-i18n="respect_direction">Follow link direction</span></label>
             </div>
             <div class="field-row">
-              <button id="ariSwap" class="btn sm" title="⇄">⇄</button>
-              <button id="ariFind" class="btn sm primary" style="flex:1" data-i18n="find_paths">Find paths</button>
+              <button id="ariSwap" class="btn sm icon" title="⇄"><i data-ico="swap"></i></button>
+              <button id="ariFind" class="btn sm primary grow" data-i18n="find_paths">Find paths</button>
               <button id="ariClear" class="btn sm ghost" data-i18n="clear">Clear</button>
             </div>
             <div id="ariResults" class="rank-list"></div>
             <div class="section-label" data-i18n="connect_title">Connect selection</div>
-            <p class="muted small" style="margin:0" data-i18n="connect_help">With 2 or more nodes selected, highlights the smallest subgraph joining them.</p>
+            <p class="muted small flush" data-i18n="connect_help">With 2 or more nodes selected, highlights the smallest subgraph joining them.</p>
             <button id="ariConnect" class="btn sm" data-i18n="connect_btn">Connect selected</button>
           </div>
         </section>
 
         <section id="analysisPanel" class="float-panel hidden">
-          <header><h3>◈ <span data-i18n="analysis">Analysis</span><span class="sub" data-i18n="analysis_sub">The structure of the labyrinth</span></h3>
-            <button id="anRefresh" class="btn sm" data-i18n="compute">Compute</button>
-            <button class="btn sm icon ghost" data-close="analysisPanel">✕</button></header>
+          <header><h3><i data-ico="graph"></i><span><span data-i18n="analysis">Analysis</span><span class="sub" data-i18n="analysis_sub">The structure of the labyrinth</span></span></h3>
+            <button id="anRefresh" class="btn sm"><i data-ico="refresh"></i><span data-i18n="compute">Compute</span></button>
+            <button class="btn sm icon ghost" data-close="analysisPanel"><i data-ico="x"></i></button></header>
           <div class="body" id="analysisBody"></div>
         </section>
       </div>
@@ -143,7 +146,7 @@
         <div class="table-tools">
           <input id="tableFilter" type="search" data-i18n-ph="table_filter">
           <select id="tableType"></select>
-          <button id="tableDelete" class="btn sm danger" disabled data-i18n="delete_marked">Delete checked</button>
+          <button id="tableDelete" class="btn sm danger" disabled><i data-ico="trash"></i><span data-i18n="delete_marked">Delete checked</span></button>
         </div>
         <div class="table-wrap"><table id="entityTable" class="grid"></table></div>
       </div>
@@ -157,8 +160,8 @@
         <span class="title" data-i18n="output">Output</span>
         <div class="progress" id="jobProgress"></div>
         <button id="cancelJobs" class="btn sm ghost hidden" data-i18n="cancel">Cancel</button>
-        <button id="clearLog" class="btn sm ghost" data-i18n="clear">Clear</button>
-        <button id="toggleConsole" class="btn sm icon ghost" title="▾">▾</button>
+        <button id="clearLog" class="btn sm icon ghost" data-i18n-title="clear"><i data-ico="eraser"></i></button>
+        <button id="toggleConsole" class="btn sm icon ghost"><i data-ico="down"></i></button>
       </header>
       <div id="log" class="log"></div>
     </section>
@@ -230,14 +233,14 @@
         <label class="check"><input type="checkbox" id="setImages"> <span data-i18n="set_images">Load remote images (avatars) automatically</span></label>
       </section>
       <section class="spane hidden" data-spane="keys">
-        <p class="muted small" style="margin:0" data-i18n="api_keys_help">All optional. Without a key, the transform that needs it is skipped.</p>
+        <p class="muted small flush" data-i18n="api_keys_help">All optional. Without a key, the transform that needs it is skipped.</p>
         <div id="keysList"></div>
       </section>
       <section class="spane hidden" data-spane="language">
         <h3 data-i18n="lang_title">Interface language</h3>
-        <p class="muted small" style="margin:0" data-i18n="lang_help">Choose the language of DAEDALUS. It is saved in this installation's settings.</p>
+        <p class="muted small flush" data-i18n="lang_help">Choose the language of DAEDALUS. It is saved in this installation's settings.</p>
         <div class="lang-options" id="langOptions"></div>
-        <p class="muted small" style="margin:0" data-i18n="lang_note">Data returned by the sources (page titles, profiles, descriptions…) is shown in its original language.</p>
+        <p class="muted small flush" data-i18n="lang_note">Data returned by the sources (page titles, profiles, descriptions…) is shown in its original language.</p>
       </section>
     </div>
     <div class="dlg-foot">

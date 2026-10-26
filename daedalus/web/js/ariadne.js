@@ -35,7 +35,7 @@ export function setEnd(which, id) {
 function renderSlots() {
   for (const [which, el] of [["src", "#ariSrc"], ["dst", "#ariDst"]]) {
     const id = S.ariadne[which];
-    $(el).innerHTML = id && S.entities.has(id) ? chip(id) : `<span>${esc(t("use_selection"))} ⊙</span>`;
+    $(el).innerHTML = id && S.entities.has(id) ? chip(id) : `<span>${esc(t("use_selection"))}</span>`;
     $(el).classList.toggle("filled", !!id);
   }
 }
@@ -63,7 +63,7 @@ function renderResults() {
     box.innerHTML = S.ariadne.src && S.ariadne.dst ? `<div class="muted small">${esc(t("no_path"))}</div>` : "";
     return;
   }
-  box.innerHTML = `<div class="field-row"><span class="section-label" style="flex:1">${esc(t("paths_found", { n: paths.length }))}</span>
+  box.innerHTML = `<div class="field-row"><span class="section-label grow">${esc(t("paths_found", { n: paths.length }))}</span>
       <button class="btn sm ghost" data-all="1">${esc(t("show_all"))}</button></div>`
     + paths.map((p, i) => `<div class="path-card ${i === S.ariadne.active ? "active" : ""}" data-path="${i}">
       <div class="meta"><span>#${i + 1}</span><span>${esc(t("hops", { n: p.length }))}</span></div>

@@ -3,13 +3,13 @@ import { S, hooks, typeInfo, neighbors, selectedEntities, transformsFor, machine
 import * as G from "./graph.js";
 import { $, $$, esc, extLink, safeUrl, debounce, dateTime, short, store, toast } from "./util.js";
 import { L, t, propLabel, linkLabel } from "./i18n.js";
-import { iconSvg } from "./icons.js";
+import { iconSvg, uiIcon } from "./icons.js";
 import { runTransforms, runMachine } from "./jobs.js";
 import { promptDialog } from "./dialogs.js";
 import * as A from "./actions.js";
 
 let tfFilter = "";
-const STATUS_ICON = { ok: "✓", empty: "∅", error: "✕", skipped: "⏭" };
+const STATUS_ICON = { ok: "✓", empty: "∅", error: "✕", skipped: "»" };
 
 export function setInspectorTab(tab) {
   S.itab = tab;
@@ -31,14 +31,21 @@ export function renderInspector() {
 function caseSummary() {
   const counts = {};
   for (const e of S.entities.values()) counts[e.type] = (counts[e.type] || 0) + 1;
-  const chips = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([type, n]) =>
-    `<span class="chip"><span class="dot" style="background:${typeInfo(type).color}"></span>${esc(L(typeInfo(type).label))} · ${n}</span>`).join(" ");
-  return `<div class="placeholder">${esc(t("nothing_selected"))}</div>
-    ${S.case ? `<div class="block"><h4>${esc(S.case.name)}</h4>
-      <div class="muted small">${esc(t("case_summary", { e: S.entities.size, l: S.links.length }))}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">${chips}</div></div>` : ""}
-    <div class="block muted small" style="line-height:1.9">${t("help_html")}
-    </div>`;
+  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const max = rows.length ? rows[0][1] : 1;
+  const bars = rows.map(([type, n]) => {
+    const info = typeInfo(type);
+    return `<div class="type-row"><span class="ico" style="color:${info.color}">${iconSvg(type, info.color, 13)}</span>
+      <span class="lbl">${esc(L(info.label))}</span><span class="bar"><i style="width:${Math.round((100 * n) / max)}%;background:${info.color}"></i></span>
+      <span class="val">${n}</span></div>`;
+  }).join("");
+  return `${S.case ? `<div class="case-card"><div class="case-name">${esc(S.case.name)}</div>
+      <div class="case-stats"><div><b>${S.entities.size}</b><span>${esc(t("an_entities"))}</span></div>
+        <div><b>${S.links.length}</b><span>${esc(t("an_links"))}</span></div>
+        <div><b>${rows.length}</b><span>${esc(t("types"))}</span></div></div></div>` : ""}
+    <div class="placeholder">${esc(t("nothing_selected"))}</div>
+    ${rows.length ? `<div class="block"><h4>${esc(t("by_type"))}</h4><div class="type-rows">${bars}</div></div>` : ""}
+    <div class="block"><h4>${esc(t("shortcuts"))}</h4><div class="kb-list">${t("help_html")}</div></div>`;
 }
 
 function fmtValue(v) {
@@ -78,36 +85,39 @@ function entityDetail(e) {
   return `
     <div class="ent-head" style="color:${info.color}">
       <div class="big-ico">${iconSvg(e.type, info.color, 22)}</div>
-      <div style="flex:1;min-width:0">
+      <div class="main">
         <div class="type">${esc(L(info.label))}${e.root ? `<span class="root-tag">${esc(t("root"))}</span>` : ""}</div>
         <div class="value">${esc(e.value)}</div>
         ${e.label !== e.value ? `<div class="muted small">${esc(e.label)}</div>` : ""}
       </div>
     </div>
     <div class="ent-actions">
-      <button class="btn sm primary" data-act="runall" ${nTransforms ? "" : "disabled"}>▶ ${esc(t("run_all_n", { n: nTransforms }))}</button>
+      <button class="btn sm primary" data-act="runall" ${nTransforms ? "" : "disabled"}>${uiIcon("play", 12)}${esc(t("run_all_n", { n: nTransforms }))}</button>
       <button class="btn sm" data-act="tab-transforms">${esc(t("transforms"))}</button>
-      <button class="btn sm icon" data-act="edit" title="${esc(t("edit_value"))}">✎</button>
-      <button class="btn sm icon" data-act="copy" title="${esc(t("copy_value"))}">⧉</button>
-      <button class="btn sm icon" data-act="link" title="${esc(t("link_to"))}">↗</button>
-      <button class="btn sm icon danger" data-act="delete" title="${esc(t("delete"))}">✕</button>
+      <span class="grow"></span>
+      <span class="btn-group">
+      <button class="btn sm icon" data-act="edit" title="${esc(t("edit_value"))}">${uiIcon("edit")}</button>
+      <button class="btn sm icon" data-act="copy" title="${esc(t("copy_value"))}">${uiIcon("copy")}</button>
+      <button class="btn sm icon" data-act="link" title="${esc(t("link_to"))}">${uiIcon("link")}</button>
+      <button class="btn sm icon danger" data-act="delete" title="${esc(t("delete"))}">${uiIcon("trash")}</button>
+      </span>
     </div>
-    <div class="bm-row"><span class="muted small" style="margin-right:4px">${esc(t("bookmark"))}</span>${bms}</div>
+    <div class="bm-row"><span class="field-k">${esc(t("bookmark"))}</span>${bms}</div>
     ${img ? `<div class="img-box">${S.loadImages ? `<img src="${esc(img)}" referrerpolicy="no-referrer" alt="">`
       : `<button class="btn sm" data-act="load-img" data-src="${esc(img)}">${esc(t("load_image"))}</button>`}</div>` : ""}
-    <div class="block"><h4>${esc(t("properties"))} <button class="btn sm ghost" data-act="add-prop">${esc(t("add_property"))}</button></h4>
+    <div class="block"><h4>${esc(t("properties"))} <button class="btn xs ghost" data-act="add-prop">${uiIcon("plus", 11)}${esc(t("add_property"))}</button></h4>
       ${props.length ? `<table class="props">${props.map(([k, v]) => `<tr><td class="k">${esc(propLabel(k))}</td>
-        <td class="v">${fmtValue(v)}<span class="x" data-del-prop="${esc(k)}" title="${esc(t("delete"))}">✕</span></td></tr>`).join("")}</table>`
+        <td class="v">${fmtValue(v)}<span class="x" data-del-prop="${esc(k)}" title="${esc(t("delete"))}">${uiIcon("x", 11)}</span></td></tr>`).join("")}</table>`
         : `<div class="muted small">—</div>`}
     </div>
     ${links.length ? `<div class="block"><h4>${esc(t("links_ext"))}</h4><div class="link-list">
-      ${links.map(([label, url]) => `<div>↗ ${extLink(url, label)}</div>`).join("")}</div></div>` : ""}
+      ${links.map(([label, url]) => `<div>${uiIcon("link", 11)}${extLink(url, label)}</div>`).join("")}</div></div>` : ""}
     ${(e.props._unverified || []).length ? `<div class="block"><h4>${esc(t("unverified"))} (${e.props._unverified.length})</h4>
-      <div class="muted small" style="margin-bottom:4px">${esc(t("unverified_help"))}</div>
-      <div class="link-list">${e.props._unverified.map(([name, url]) => `<div>? ${extLink(url, name)}</div>`).join("")}</div></div>` : ""}
+      <div class="muted small gap-b">${esc(t("unverified_help"))}</div>
+      <div class="link-list">${e.props._unverified.map(([name, url]) => `<div><span class="q">?</span>${extLink(url, name)}</div>`).join("")}</div></div>` : ""}
     ${(e.props._dates || []).length ? `<div class="block"><h4>${esc(t("dates"))}</h4>
       ${e.props._dates.map(([label, d]) => `<div class="small"><span class="mono muted">${esc(d)}</span> · ${esc(label)}</div>`).join("")}</div>` : ""}
-    <div class="block"><h4>${esc(t("connections"))} <span class="muted">${nbs.length}</span></h4>
+    <div class="block"><h4>${esc(t("connections"))} <span class="count">${nbs.length}</span></h4>
       ${nbs.slice(0, 80).map((nb) => {
         const other = S.entities.get(nb.id);
         if (!other) return "";
@@ -120,7 +130,7 @@ function entityDetail(e) {
     </div>
     <div class="block"><h4>${esc(t("notes"))}</h4><textarea class="notes-box" id="entNotesBox" rows="3">${esc(e.notes || "")}</textarea></div>
     ${(e.props._sources || []).length ? `<div class="block"><h4>${esc(t("sources"))}</h4>
-      <div style="display:flex;flex-wrap:wrap;gap:4px">${e.props._sources.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div></div>` : ""}
+      <div class="chips">${e.props._sources.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div></div>` : ""}
     ${runs.length ? `<div class="block"><h4>${esc(t("history"))}</h4>${runs.map((r) => `
       <div class="run-row"><span class="st-${esc(r.status)}">${STATUS_ICON[r.status] || "·"}</span>
         <span>${esc(L(S.transforms[r.transform]?.title) || r.transform)}</span><span class="dim">${esc(dateTime(r.finished).split(" ")[1] || "")}</span>
@@ -135,12 +145,12 @@ function multiDetail(ents) {
   const sameType = types.length === 1;
   return `
     <div class="block"><h4>${esc(t("n_selected", { n: ents.length }))}</h4>
-      <div style="display:flex;flex-wrap:wrap;gap:4px">${Object.entries(counts).map(([type, n]) =>
+      <div class="chips">${Object.entries(counts).map(([type, n]) =>
         `<span class="chip"><span class="dot" style="background:${typeInfo(type).color}"></span>${esc(L(typeInfo(type).label))} · ${n}</span>`).join("")}</div></div>
     <div class="ent-actions">
-      <button class="btn sm primary" data-act="runall">▶ ${esc(t("run_all"))}</button>
+      <button class="btn sm primary" data-act="runall">${uiIcon("play", 12)}${esc(t("run_all"))}</button>
       <button class="btn sm" data-act="tab-transforms">${esc(t("transforms"))}</button>
-      <button class="btn sm" data-act="connect">🧵 ${esc(t("connect_btn"))}</button>
+      <button class="btn sm" data-act="connect">${uiIcon("thread")}${esc(t("connect_btn"))}</button>
       ${sameType ? `<button class="btn sm" data-act="merge">${esc(t("merge"))}</button>` : ""}
       <button class="btn sm" data-act="neighbors">${esc(t("select_neighbors"))}</button>
       <button class="btn sm danger" data-act="delete">${esc(t("delete_n", { n: ents.length }))}</button>
@@ -167,7 +177,7 @@ export function renderTransforms(ents = selectedEntities()) {
   const limits = [12, 50, 255, 1000];
   let html = `<div class="tf-filter"><input id="tfFilter" type="search" placeholder="${esc(t("filter_transforms"))}" value="${esc(tfFilter)}">
       <select id="tfLimit" title="${esc(t("result_limit"))}">${limits.map((n) => `<option ${n === S.limit ? "selected" : ""}>${n}</option>`).join("")}</select></div>
-    <button class="btn sm primary" data-act="runall">▶ ${esc(t("run_all_n", { n: list.filter((x) => x.default).length }))}</button>`;
+    <button class="btn sm primary wide" data-act="runall">${uiIcon("play", 12)}${esc(t("run_all_n", { n: list.filter((x) => x.default).length }))}</button>`;
   if (!list.length) html += `<div class="muted small">${esc(t("no_transforms"))}</div>`;
   for (const [cat, items] of Object.entries(byCat)) {
     html += `<div class="tf-cat"><div class="cat-name">${esc(L(S.meta.transform_categories[cat]) || cat)}</div>`;
@@ -177,7 +187,7 @@ export function renderTransforms(ents = selectedEntities()) {
       const running = single ? isRunning(single.id, tr.name) : false;
       const last = run ? `<span class="st-${esc(run.status)}" title="${esc(run.message || "")}">${STATUS_ICON[run.status] || ""}${run.found ? ` ${run.found}` : ""}</span>` : "";
       html += `<div class="tf-item ${locked ? "locked" : ""} ${running ? "running" : ""}" data-t="${esc(tr.name)}">
-        <div class="tt">${esc(L(tr.title))}${locked ? `<span class="key">🔑 ${esc(tr.keys.join(", "))}</span>` : ""}</div>
+        <div class="tt">${esc(L(tr.title))}${locked ? `<span class="key">${uiIcon("key", 11)}${esc(tr.keys.join(", "))}</span>` : ""}</div>
         <div class="last">${last}</div>
         <div class="ds">${esc(L(tr.description))}${tr.sources.length ? ` · <i>${esc(tr.sources.join(", "))}</i>` : ""}</div></div>`;
     }
@@ -188,7 +198,7 @@ export function renderTransforms(ents = selectedEntities()) {
     html += `<div class="tf-cat"><div class="cat-name">${esc(t("machines"))}</div>`;
     for (const m of machines) {
       html += `<div class="tf-item" data-m="${esc(m.name)}" title="${esc(L(m.description))}">
-        <div class="tt">⚙ ${esc(L(m.title))}</div><div class="last">${m.generic ? `<select data-depth="${esc(m.name)}" title="${esc(t("machine_depth"))}">
+        <div class="tt">${uiIcon("cpu", 12)}${esc(L(m.title))}</div><div class="last">${m.generic ? `<select data-depth="${esc(m.name)}" title="${esc(t("machine_depth"))}">
           ${[1, 2, 3].map((d) => `<option ${d === 2 ? "selected" : ""}>${d}</option>`).join("")}</select>` : ""}</div>
         <div class="ds">${esc(L(m.description))}</div></div>`;
     }

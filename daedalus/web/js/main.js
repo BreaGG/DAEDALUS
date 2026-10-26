@@ -3,7 +3,7 @@ import { S, hooks, setLinks, typeInfo } from "./state.js";
 import * as G from "./graph.js";
 import { $, $$, api, debounce, esc, store, toast } from "./util.js";
 import { L, t, applyI18n, getLang, setLang } from "./i18n.js";
-import { iconSvg } from "./icons.js";
+import { iconSvg, uiIcon } from "./icons.js";
 import { closeAll, cancelAll, renderProgress, runTransforms, runMachine } from "./jobs.js";
 import { entityDialog, promptDialog, confirmDialog, settingsDialog, typeOptions, initSettingsTabs } from "./dialogs.js";
 import { initInspector, renderInspector, renderTransforms, setInspectorTab } from "./inspector.js";
@@ -14,6 +14,7 @@ import * as A from "./actions.js";
 
 // ------------------------------------------------------------------ boot
 async function boot() {
+  for (const el of $$("i[data-ico]")) el.outerHTML = uiIcon(el.dataset.ico);
   const [meta, settings] = await Promise.all([api("/api/meta"), api("/api/settings")]);
   applyMeta(meta);
   S.settings = settings;
@@ -129,8 +130,8 @@ function renderLegend() {
   for (const e of S.entities.values()) counts[e.type] = (counts[e.type] || 0) + 1;
   const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   const box = $("#legend");
-  box.classList.toggle("collapsed", !!store.get("legendCollapsed", false));
-  box.innerHTML = rows.length ? `<div class="lg-head" data-toggle="1"><span>${esc(t("types"))}</span><span>${box.classList.contains("collapsed") ? "▸" : "▾"}</span></div>`
+  box.classList.toggle("collapsed", !!store.get("legendCollapsed", true));
+  box.innerHTML = rows.length ? `<div class="lg-head" data-toggle="1"><span>${esc(t("types"))}</span>${uiIcon(box.classList.contains("collapsed") ? "right" : "down", 12)}</div>`
     + rows.map(([type, n]) => {
       const info = typeInfo(type);
       return `<div class="lg-row ${S.hiddenTypes.has(type) ? "off" : ""}" data-type="${esc(type)}">
@@ -155,7 +156,7 @@ function renderPalette() {
       <span class="name">${esc(L(info.label))}</span><span class="count">${counts[key] || ""}</span></div>`).join("")}
   </div>`).join("");
   $("#machineList").innerHTML = Object.values(S.machines).map((m) => `<div class="machine-item" data-machine="${esc(m.name)}" title="${esc(L(m.description))}">
-    <b>⚙ ${esc(L(m.title))}</b><span>${esc(L(m.description))}</span></div>`).join("");
+    <b>${uiIcon("cpu", 13)}${esc(L(m.title))}</b><span>${esc(L(m.description))}</span></div>`).join("");
 }
 
 function fillQuickType(detected = null) {
@@ -404,7 +405,7 @@ function wireConsole() {
   $("#toggleConsole").addEventListener("click", () => {
     const c = $("#console");
     c.classList.toggle("collapsed");
-    $("#toggleConsole").textContent = c.classList.contains("collapsed") ? "▴" : "▾";
+    $("#toggleConsole").innerHTML = uiIcon(c.classList.contains("collapsed") ? "up" : "down");
     setTimeout(() => G.cy.resize(), 50);
   });
   $("#clearLog").addEventListener("click", () => { $("#log").innerHTML = ""; });

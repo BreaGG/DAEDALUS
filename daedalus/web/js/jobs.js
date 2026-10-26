@@ -22,7 +22,7 @@ export async function runMachine(ids, machine, depth = 2) {
   const r = await api(`/api/cases/${S.caseId}/machine`, {
     method: "POST", body: { entity_ids: ids, machine, depth, limit: S.limit },
   });
-  log({ status: "info", transform: L(S.machines[machine]?.title), message: `▶ ${t("run_machine")}` });
+  log({ status: "info", transform: L(S.machines[machine]?.title), message: t("run_machine") });
   watch(r.job_id, L(S.machines[machine]?.title));
 }
 
@@ -143,7 +143,7 @@ export function renderProgress() {
     <span>${esc(t("job_running", { done, total, created }))}</span>`;
 }
 
-const ICON = { ok: "✓", empty: "∅", error: "✕", skipped: "⏭", info: "▸" };
+const ICON = { ok: "✓", empty: "∅", error: "✕", skipped: "»", info: "·" };
 
 export function log({ status = "info", entityId = null, transform = "", message = "" }) {
   const box = $("#log");
