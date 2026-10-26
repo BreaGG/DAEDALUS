@@ -401,12 +401,55 @@ function wireDrop() {
   });
 }
 
+function setConsoleCollapsed(on) {
+  $("#console").classList.toggle("collapsed", on);
+  $("#toggleConsole").innerHTML = uiIcon(on ? "up" : "down");
+}
+
 function wireConsole() {
-  $("#toggleConsole").addEventListener("click", () => {
-    const c = $("#console");
-    c.classList.toggle("collapsed");
-    $("#toggleConsole").innerHTML = uiIcon(c.classList.contains("collapsed") ? "up" : "down");
-    setTimeout(() => G.cy.resize(), 50);
+  const c = $("#console");
+  const MIN = 60;
+  const maxHeight = () => Math.max(MIN, c.parentElement.clientHeight - 160);
+  const saved = store.get("consoleHeight", null);
+  if (saved) c.style.height = `${Math.min(saved, maxHeight())}px`;
+  $("#toggleConsole").addEventListener("click", () => setConsoleCollapsed(!c.classList.contains("collapsed")));
+
+  // drag the top edge to resize; dragging below the minimum collapses it
+  const grip = $("#consoleResize");
+  grip.addEventListener("pointerdown", (ev) => {
+    if (ev.button !== 0) return;
+    ev.preventDefault();
+    grip.setPointerCapture(ev.pointerId);
+    const startY = ev.clientY;
+    const startH = c.getBoundingClientRect().height;
+    document.body.classList.add("resizing-v");
+    const move = (e) => {
+      const h = startH + (startY - e.clientY);
+      if (h < MIN / 2) {
+        setConsoleCollapsed(true);
+        return;
+      }
+      setConsoleCollapsed(false);
+      c.style.height = `${Math.min(Math.max(h, MIN), maxHeight())}px`;
+    };
+    const up = () => {
+      grip.removeEventListener("pointermove", move);
+      grip.removeEventListener("pointerup", up);
+      grip.removeEventListener("pointercancel", up);
+      document.body.classList.remove("resizing-v");
+      if (!c.classList.contains("collapsed")) store.set("consoleHeight", Math.round(c.getBoundingClientRect().height));
+    };
+    grip.addEventListener("pointermove", move);
+    grip.addEventListener("pointerup", up);
+    grip.addEventListener("pointercancel", up);
+  });
+  grip.addEventListener("dblclick", () => {
+    c.style.height = "";
+    store.set("consoleHeight", null);
+    setConsoleCollapsed(false);
+  });
+  window.addEventListener("resize", () => {
+    if (c.style.height && parseFloat(c.style.height) > maxHeight()) c.style.height = `${maxHeight()}px`;
   });
   $("#clearLog").addEventListener("click", () => { $("#log").innerHTML = ""; });
   $("#cancelJobs").addEventListener("click", () => cancelAll());
