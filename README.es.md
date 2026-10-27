@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/img/banner.svg" alt="DAEDALUS, análisis de vínculos de código abierto" width="760">
+  <img src="docs/img/header.png" alt="DAEDALUS: traza el mapa del laberinto y sigue el hilo" width="100%">
 </p>
 
 <p align="center">
