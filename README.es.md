@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/BreaGG/DAEDALUS/actions/workflows/ci.yml"><img src="https://github.com/BreaGG/DAEDALUS/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-informational" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/licencia-MIT-informational" alt="Licencia MIT">
+  <img src="https://img.shields.io/badge/licencia-GPL--3.0--or--later-informational" alt="Licencia GPL-3.0-or-later">
 </p>
 
 **DAEDALUS** es un banco de trabajo autoalojado para análisis de vínculos e inteligencia de fuentes abiertas. Partes de
@@ -26,6 +26,7 @@ Creado por **Alejandro Brea** · [Read in English](README.md)
 - [Ampliarlo](#ampliarlo)
 - [Por dentro](#por-dentro)
 - [Ética](#ética)
+- [Contribuir](#contribuir)
 - [Licencia](#licencia)
 
 ## La idea
@@ -167,7 +168,17 @@ automatiza pueden hacer daño si se usan mal. Úsalo para investigación de segu
 periodismo, diligencia debida o para auditar tu propia exposición. No lo uses para vigilar, acosar o perfilar a
 personas sin base legal, y respeta la normativa de protección de datos y los términos de cada fuente que consultes.
 
+## Contribuir
+
+Se agradecen los avisos de errores, transforms nuevos, traducciones y correcciones. Lee
+[CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir una pull request.
+
 ## Licencia
 
-MIT © 2026 Alejandro Brea. Las librerías de terceros incluidas mantienen sus propias licencias, recogidas en
+Copyright © 2026 Alejandro Brea. DAEDALUS es software libre: puedes redistribuirlo y/o modificarlo bajo
+los términos de la [GNU General Public License](LICENSE) publicada por la Free Software Foundation, ya sea la versión 3
+de la licencia o (a tu elección) cualquier versión posterior (GPL-3.0-or-later). Se distribuye con la esperanza de que
+sea útil, pero SIN NINGUNA GARANTÍA; consulta la licencia para más detalles.
+
+Las librerías de terceros incluidas mantienen sus propias licencias, recogidas en
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

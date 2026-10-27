@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/BreaGG/DAEDALUS/actions/workflows/ci.yml"><img src="https://github.com/BreaGG/DAEDALUS/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-informational" alt="Python 3.11+">
-  <img src="https://img.shields.io/badge/license-MIT-informational" alt="MIT license">
+  <img src="https://img.shields.io/badge/license-GPL--3.0--or--later-informational" alt="GPL-3.0-or-later license">
 </p>
 
 **DAEDALUS** is a self-hosted workbench for link analysis and open-source intelligence. You start from a single clue
@@ -25,6 +25,7 @@ Created by **Alejandro Brea** · [Leer en español](README.es.md)
 - [Extending](#extending)
 - [Under the hood](#under-the-hood)
 - [Ethics](#ethics)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## The idea
@@ -164,7 +165,17 @@ hurt people when misused. Use it for security research, threat intelligence, jou
 own exposure. Do not use it to stalk, harass or profile individuals without a lawful basis, and respect
 data-protection law and the terms of every source you query.
 
+## Contributing
+
+Bug reports, new transforms, translations and fixes are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before
+opening a pull request.
+
 ## License
 
-MIT © 2026 Alejandro Brea. Bundled third-party libraries keep their own licences, listed in
+Copyright © 2026 Alejandro Brea. DAEDALUS is free software: you can redistribute it and/or modify it under
+the terms of the [GNU General Public License](LICENSE) as published by the Free Software Foundation, either version 3
+of the License, or (at your option) any later version (GPL-3.0-or-later). It is distributed in the hope that it will
+be useful, but WITHOUT ANY WARRANTY; see the licence for details.
+
+Bundled third-party libraries keep their own licences, listed in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
