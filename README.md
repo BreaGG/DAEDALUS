@@ -15,6 +15,11 @@ shortest chain of evidence between two things that should have nothing in common
 
 Created by **Alejandro Brea** · [Leer en español](README.es.md)
 
+<p align="center">
+  <a href="docs/img/demo.mp4"><img src="docs/img/demo.gif" alt="DAEDALUS demo" width="800"></a><br>
+  <sub>30-second tour · <a href="docs/img/demo.mp4">watch in HD (MP4)</a></sub>
+</p>
+
 ---
 
 - [The idea](#the-idea)
