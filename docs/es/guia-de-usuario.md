@@ -272,7 +272,7 @@ seleccionarla. Cuando el grafo cambia, un aviso te recuerda volver a calcular.
 
 ## 13. Ajustes
 
-![Ajustes](../img/es-settings.png)
+<img src="../img/es-settings.png" alt="Ajustes" width="600">
 
 ### General
 

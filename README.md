@@ -17,7 +17,7 @@ Created by **Alejandro Brea** · [Leer en español](README.es.md)
 
 <p align="center">
   <a href="docs/img/demo.mp4"><img src="docs/img/demo.gif" alt="DAEDALUS demo" width="800"></a><br>
-  <sub>30-second tour · <a href="docs/img/demo.mp4">watch in HD (MP4)</a></sub>
+  <sub>30-second tour · <a href="docs/img/demo.mp4">watch in Full HD (MP4)</a></sub>
 </p>
 
 ---

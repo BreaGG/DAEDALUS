@@ -258,7 +258,7 @@ notice reminds you to compute again.
 
 ## 13. Settings
 
-![Settings](../img/en-settings.png)
+<img src="../img/en-settings.png" alt="Settings" width="600">
 
 ### General
 
