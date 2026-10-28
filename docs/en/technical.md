@@ -186,7 +186,7 @@ SQLite tables (created by `store.py`):
 | `links` | `(case_id, src, dst, label)` | `transform` (which transform or `manual` created it), `created` |
 | `runs` | `id` | `case_id`, `entity_id`, `transform`, `status`, `message`, `found`, `started`, `finished` |
 
-**Entity ids** are `type:value` after normalisation (`domain:example.com`, `email:daedalusintelligence@gmail.com`). Normalisation
+**Entity ids** are `type:value` after normalisation (`domain:example.com`, `email:jane@example.com`). Normalisation
 lower-cases emails, domains, aliases and hashes, canonicalises IPs and CIDRs, strips phone formatting, and so on;
 free-text types (person, organization, location, phrase, account, url) are compared case-insensitively. Adding an
 entity that already exists merges its properties instead of duplicating it. A link is unique per
@@ -233,10 +233,10 @@ With a password set, send HTTP Basic credentials (any user name). Errors return 
 
 ```jsonc
 // entity
-{"id": "email:daedalusintelligence@gmail.com", "type": "email", "value": "daedalusintelligence@gmail.com", "label": "daedalusintelligence@gmail.com",
+{"id": "email:jane@example.com", "type": "email", "value": "jane@example.com", "label": "jane@example.com",
  "props": {"_sources": ["Manual"]}, "notes": "", "bookmark": "", "root": true, "created": 1792757057.3, "updated": 1792757057.3}
 // link
-{"src": "username:daedalusintelligence", "dst": "email:daedalusintelligence@gmail.com", "label": "public email", "transform": "github_profile"}
+{"src": "username:jane", "dst": "email:jane@example.com", "label": "public email", "transform": "github_profile"}
 // run
 {"id": 7, "case_id": 1, "entity_id": "ip:203.0.113.9", "transform": "shodan_internetdb", "status": "ok",
  "message": "2 result(s)", "found": 2, "started": 1792757060.1, "finished": 1792757061.4}
