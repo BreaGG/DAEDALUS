@@ -2,7 +2,7 @@
 #   1. Variables: DAEDALUS_PASSWORD = a long random string (the app refuses to start on Railway without it)
 #   2. Attach a Volume (any mount path, e.g. /data) so cases survive redeploys
 #   3. Networking: generate a public domain
-# Details: README.md → "Deploy on Railway".
+# Details: docs/en/technical.md → "4. Deployment" → "Railway".
 
 [build]
 builder = "DOCKERFILE"

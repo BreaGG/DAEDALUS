@@ -180,3 +180,12 @@ def test_language_setting_defaults_to_english(client, tmp_path):
     client.put("/api/settings", json={"lang": "en"})
     # defaults are not written, so a future default change still reaches existing installs
     assert "lang" not in json.loads((tmp_path / "settings.json").read_text())
+
+
+def test_typed_coordinates_land_on_the_map(client):
+    cid = new_case(client)
+    r = client.post(f"/api/cases/{cid}/entities", json={"value": "39.4699, -0.3763"}).json()
+    assert r["entity"]["type"] == "location"
+    assert r["entity"]["props"]["_lat"] == 39.4699 and r["entity"]["props"]["_lon"] == -0.3763
+    named = client.post(f"/api/cases/{cid}/entities", json={"value": "Valencia, Spain", "type": "location"}).json()
+    assert "_lat" not in named["entity"]["props"]

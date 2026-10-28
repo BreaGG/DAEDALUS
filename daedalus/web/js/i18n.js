@@ -3,12 +3,11 @@ import { $$ } from "./util.js";
 
 const DICT = {
   es: {
-    tagline: "análisis de vínculos · osint",
     case_open: "Investigación abierta", new_case: "Nueva", case_actions: "Acciones de la investigación",
     quick_ph: "Añade una entidad: alias, correo, teléfono, nombre, dominio, IP, URL, hash, cartera…",
     entity_type: "Tipo", auto: "Automático", add: "Añadir", investigate: "Investigar",
     import: "Importar", export: "Exportar", settings: "Ajustes",
-    palette: "Paleta de entidades", filter: "Filtrar…", machines: "Máquinas", image_analysis: "Imagen (EXIF/GPS)",
+    palette: "Paleta de entidades", palette_collapse: "Contraer la paleta", palette_expand: "Expandir la paleta", filter: "Filtrar…", machines: "Máquinas", image_analysis: "Imagen (EXIF/GPS)",
     upload_image: "Suelta o elige una foto para extraer sus metadatos",
     tab_graph: "Grafo", tab_table: "Tabla", tab_map: "Mapa", tab_timeline: "Cronología", tab_notes: "Notas",
     layout: "Disposición", layout_organic: "Orgánico", layout_hierarchical: "Jerárquico", layout_radial: "Radial",
@@ -83,12 +82,11 @@ const DICT = {
     help_html: "<div class=\"kb\"><span><kbd>Clic dcho.</kbd></span><span>Transforms</span></div><div class=\"kb\"><span><kbd>Doble clic</kbd></span><span>Panel de transforms</span></div><div class=\"kb\"><span><kbd>Ctrl/⌘</kbd>+clic</span><span>Añadir a la selección</span></div><div class=\"kb\"><span><kbd>Shift</kbd>+arrastrar</span><span>Seleccionar un área</span></div><div class=\"kb\"><span><kbd>Supr</kbd></span><span>Borrar</span></div><div class=\"kb\"><span><kbd>Esc</kbd></span><span>Limpiar</span></div><div class=\"kb\"><span><kbd>F</kbd></span><span>Encuadrar</span></div><div class=\"kb\"><span><kbd>Ctrl+A</kbd></span><span>Seleccionar todo</span></div>",
   },
   en: {
-    tagline: "link analysis · osint",
     case_open: "Open investigation", new_case: "New", case_actions: "Investigation actions",
     quick_ph: "Add an entity: alias, email, phone, name, domain, IP, URL, hash, wallet…",
     entity_type: "Type", auto: "Auto", add: "Add", investigate: "Investigate",
     import: "Import", export: "Export", settings: "Settings",
-    palette: "Entity palette", filter: "Filter…", machines: "Machines", image_analysis: "Image (EXIF/GPS)",
+    palette: "Entity palette", palette_collapse: "Collapse the palette", palette_expand: "Expand the palette", filter: "Filter…", machines: "Machines", image_analysis: "Image (EXIF/GPS)",
     upload_image: "Drop or pick a photo to extract its metadata",
     tab_graph: "Graph", tab_table: "Table", tab_map: "Map", tab_timeline: "Timeline", tab_notes: "Notes",
     layout: "Layout", layout_organic: "Organic", layout_hierarchical: "Hierarchical", layout_radial: "Radial",

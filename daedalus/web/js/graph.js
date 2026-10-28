@@ -56,6 +56,7 @@ const STYLE = [
 
 export function initGraph(container, handlers) {
   H = handlers;
+  cytoscape.warnings(false); // the custom wheelSensitivity below is deliberate
   cy = cytoscape({
     container, style: STYLE, wheelSensitivity: 0.25, minZoom: 0.05, maxZoom: 4, boxSelectionEnabled: true,
     selectionType: "single",

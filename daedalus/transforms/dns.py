@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 
 from ..entities import L, registered_domain
-from ..webutil import resolve, reverse_dns
+from ..webutil import DNSUnavailable, resolve, reverse_dns
 from .base import Skip, Transform, register
 
 VERIFICATION_PREFIXES = (
@@ -27,9 +27,17 @@ class ToIP(Transform):
     sources = ("DNS",)
 
     async def run(self, ctx):
+        failed = None
         for rtype in ("A", "AAAA"):
-            for ip in await resolve(ctx.value, rtype):
+            try:
+                ips = await resolve(ctx.value, rtype)
+            except DNSUnavailable as e:
+                failed = e
+                continue
+            for ip in ips:
                 ctx.add("ip", ip, {"version": 4 if rtype == "A" else 6}, label=rtype)
+        if failed and not ctx.found:
+            raise failed
 
 
 @register
@@ -100,7 +108,11 @@ class ToTXT(Transform):
                             label=f"SPF {key}")
                 elif key in ("ip4", "ip6") and val:
                     ctx.add("netblock" if "/" in val else "ip", val, label=f"SPF {key}")
-        dmarc = next((t for t in await resolve(f"_dmarc.{ctx.value}", "TXT") if t.lower().startswith("v=dmarc1")), None)
+        try:
+            dmarc_txt = await resolve(f"_dmarc.{ctx.value}", "TXT")
+        except DNSUnavailable:
+            dmarc_txt = []  # keep the SPF findings
+        dmarc = next((t for t in dmarc_txt if t.lower().startswith("v=dmarc1")), None)
         if dmarc:
             props["dmarc"] = dmarc
             policy = re.search(r"\bp=(\w+)", dmarc)

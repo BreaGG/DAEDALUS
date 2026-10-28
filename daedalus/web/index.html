@@ -16,7 +16,7 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#10151b"/>
       <path d="M5 27V5h22v22H9V9h14v14H13V13h6v6h-3" fill="none" stroke="#d6a84f" stroke-width="2" stroke-linecap="square"/>
       <circle cx="16" cy="16" r="1.6" fill="#e5534b"/></svg>
-    <span class="wordmark">DAEDALUS<small data-i18n="tagline">link analysis · osint</small></span>
+    <span class="wordmark">DAEDALUS</span>
   </a>
   <div class="case-bar">
     <select id="caseSelect" data-i18n-title="case_open"></select>
@@ -40,8 +40,9 @@
 </header>
 
 <main class="workspace" id="workspace">
-  <aside class="palette">
-    <div class="panel-title"><span data-i18n="palette">Entity palette</span></div>
+  <aside class="palette" id="palette">
+    <div class="panel-title"><span data-i18n="palette">Entity palette</span>
+      <button id="paletteToggle" class="btn sm icon ghost" data-i18n-title="palette_collapse"><i data-ico="collapse"></i></button></div>
     <input id="paletteFilter" class="filter" type="search" data-i18n-ph="filter">
     <div class="panel-scroll">
       <div id="paletteList"></div>

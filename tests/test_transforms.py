@@ -257,6 +257,31 @@ def test_dns_txt_spf_and_dmarc(engine_env, router, monkeypatch):
     assert d["props"]["verification_tokens"] == ["google-site-verification=abc123"]
 
 
+def test_dns_outage_is_an_error_not_an_answer(engine_env, router, monkeypatch):
+    from daedalus.transforms import identity
+    from daedalus.webutil import DNSUnavailable
+
+    async def down(name, rtype):
+        raise DNSUnavailable(timeout=True)
+
+    monkeypatch.setattr(dns_mod, "resolve", down)
+    monkeypatch.setattr(identity, "resolve", down)
+    g, run, _ = run_transform(engine_env, router, "dns_mx", "domain", "example.com")
+    assert run["status"] == "error" and "timed out" in run["message"]
+    assert "accepts_mail" not in g["entities"][0]["props"]
+    g, run, _ = run_transform(engine_env, router, "email_validate", "email", "jane@example.com")
+    assert run["status"] == "error" and "domain_accepts_mail" not in g["entities"][0]["props"]
+
+    async def only_a(name, rtype):
+        if rtype == "AAAA":
+            raise DNSUnavailable(timeout=True)
+        return ["192.0.2.10"]
+
+    monkeypatch.setattr(dns_mod, "resolve", only_a)
+    g, run, _ = run_transform(engine_env, router, "dns_resolve", "domain", "example.com")
+    assert run["status"] == "ok" and values(g, "ip") == ["192.0.2.10"]
+
+
 def test_missing_key_is_skipped(engine_env, router):
     _, run, _ = run_transform(engine_env, router, "shodan_host", "ip", "1.2.3.4")
     assert run["status"] == "skipped" and "Shodan" in run["message"]

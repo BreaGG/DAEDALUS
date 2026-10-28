@@ -188,7 +188,7 @@ export function renderAnalysis() {
     </div>
     <label class="check small"><input type="checkbox" id="anChoke" ${S.showChoke ? "checked" : ""}> ${esc(t("show_choke"))}</label>
     <div class="section-label">${esc(t("hubs"))}</div>
-    <div class="rank-list">${a.hubs.map((h) => rankRow(h.id, h.betweenness, maxB, (v) => v.toFixed(3))).join("") || `<div class="muted small">${esc(t("none_found"))}</div>`}</div>
+    <div class="rank-list">${a.hubs.filter((h) => h.betweenness > 0).map((h) => rankRow(h.id, h.betweenness, maxB, (v) => v.toFixed(3))).join("") || `<div class="muted small">${esc(t("none_found"))}</div>`}</div>
     <div class="section-label">${esc(t("choke_points"))} · ${a.articulation_points.length}</div>
     <div class="muted small">${esc(t("choke_help"))}</div>
     <div class="rank-list">${a.articulation_points.slice(0, 15).map((id) => rankRow(id, a.degree[id], 0, (v) => `${v}`)).join("")

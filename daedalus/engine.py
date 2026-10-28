@@ -17,6 +17,7 @@ import httpx
 from .config import API_KEYS, Settings
 from .store import Store
 from .transforms import MACHINES, REGISTRY, Skip, Transform
+from .webutil import DNSUnavailable
 
 log = logging.getLogger("daedalus")
 
@@ -286,6 +287,8 @@ class Engine:
             status, msg = "error", f"Timed out after {int(t.timeout)} s" + (f" · {ctx.found} partial" if ctx.found else "")
         except httpx.HTTPError as e:
             status, msg = "error", f"Network error: {type(e).__name__}"
+        except DNSUnavailable as e:
+            status, msg = "error", str(e)
         except asyncio.CancelledError:
             self.store.add_run(job.case_id, ent["id"], t.name, "error", "Cancelled", ctx.found, started)
             raise

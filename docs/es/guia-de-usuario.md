@@ -63,7 +63,7 @@ configuración, la API REST y cómo ampliar DAEDALUS, consulta la [documentació
 | Zona | Dónde | Para qué |
 |---|---|---|
 | **Barra superior** | arriba | Selector de investigación, **+ Nueva**, **⋯** (renombrar / eliminar), la barra de alta rápida, **Importar**, **Exportar**, cambio de idioma y **Ajustes**. |
-| **Paleta de entidades** | izquierda | Todos los tipos que puedes crear (con cuántos tiene el caso), la lista de **máquinas** y la zona para **imágenes**. |
+| **Paleta de entidades** | izquierda | Todos los tipos que puedes crear (con cuántos tiene el caso), la lista de **máquinas** y la zona para **imágenes**. El botón junto a su título la pliega en una columna de iconos (que se pueden seguir pulsando y arrastrando); en ventanas de menos de 1100 px empieza plegada. |
 | **Barra de herramientas** | sobre el lienzo | Pestañas (**Grafo, Tabla, Mapa, Cronología, Notas**), selector de disposición, **Reorganizar**, **auto**, **Hilo de Ariadna**, **Análisis** y el buscador del grafo. |
 | **Lienzo** | centro | El grafo. El cuadro **Tipos** (arriba a la izquierda) lista los tipos presentes y permite ocultarlos; la barra inferior tiene zoom, **Encuadrar**, **PNG**, **etiquetas** de los enlaces y contadores. |
 | **Inspector** | derecha | **Detalle** de la entidad seleccionada (propiedades, enlaces, fechas, conexiones, notas, historial) y el panel **Transforms**. |

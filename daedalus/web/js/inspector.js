@@ -1,7 +1,7 @@
 // Right panel: entity detail and the transforms runner.
 import { S, hooks, typeInfo, neighbors, selectedEntities, transformsFor, machinesFor, lastRun, isRunning, BOOKMARK_COLORS } from "./state.js";
 import * as G from "./graph.js";
-import { $, $$, esc, extLink, safeUrl, debounce, dateTime, short, store, toast } from "./util.js";
+import { $, $$, esc, extLink, safeUrl, dateTime, short, store, toast } from "./util.js";
 import { L, t, propLabel, linkLabel } from "./i18n.js";
 import { iconSvg, uiIcon } from "./icons.js";
 import { runTransforms, runMachine } from "./jobs.js";
@@ -21,9 +21,18 @@ export function setInspectorTab(tab) {
 export function renderInspector() {
   const ents = selectedEntities();
   const detail = $("#detailPane");
+  // a refresh (a save, a running transform…) must not swallow a note being typed
+  const box = document.activeElement?.id === "entNotesBox" ? document.activeElement : null;
+  const editing = box && { id: box.dataset.id, value: box.value, start: box.selectionStart, end: box.selectionEnd };
   if (!ents.length) detail.innerHTML = caseSummary();
   else if (ents.length === 1) detail.innerHTML = entityDetail(ents[0]);
   else detail.innerHTML = multiDetail(ents);
+  const again = editing && $("#entNotesBox");
+  if (again && again.dataset.id === editing.id) {
+    again.value = editing.value;
+    again.focus();
+    again.setSelectionRange(editing.start, editing.end);
+  }
   renderTransforms(ents);
 }
 
@@ -128,7 +137,7 @@ function entityDetail(e) {
       }).join("") || `<div class="muted small">—</div>`}
       ${nbs.length > 80 ? `<div class="muted small">+${nbs.length - 80}</div>` : ""}
     </div>
-    <div class="block"><h4>${esc(t("notes"))}</h4><textarea class="notes-box" id="entNotesBox" rows="3">${esc(e.notes || "")}</textarea></div>
+    <div class="block"><h4>${esc(t("notes"))}</h4><textarea class="notes-box" id="entNotesBox" data-id="${esc(e.id)}" rows="3">${esc(e.notes || "")}</textarea></div>
     ${(e.props._sources || []).length ? `<div class="block"><h4>${esc(t("sources"))}</h4>
       <div class="chips">${e.props._sources.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div></div>` : ""}
     ${runs.length ? `<div class="block"><h4>${esc(t("history"))}</h4>${runs.map((r) => `
@@ -215,7 +224,15 @@ export function renderTransforms(ents = selectedEntities()) {
 // ------------------------------------------------------------------ events
 export function initInspector() {
   $$(".insp-tabs .tab").forEach((b) => b.addEventListener("click", () => setInspectorTab(b.dataset.itab)));
-  const saveNotes = debounce((id, notes) => A.updateEntity(id, { notes }).catch(() => {}), 700);
+  let pendingNote = null;
+  let noteTimer = null;
+  const saveNote = () => {
+    clearTimeout(noteTimer);
+    if (!pendingNote) return;
+    const { id, notes } = pendingNote;
+    pendingNote = null;
+    if (S.entities.has(id)) A.updateEntity(id, { notes }).catch(() => {});
+  };
 
   for (const pane of [$("#detailPane"), $("#transformPane")]) {
     pane.addEventListener("click", async (ev) => {
@@ -261,8 +278,12 @@ export function initInspector() {
     }
   });
   $("#detailPane").addEventListener("input", (ev) => {
-    if (ev.target.id === "entNotesBox" && S.selection.length === 1) saveNotes(S.selection[0], ev.target.value);
+    if (ev.target.id !== "entNotesBox") return;
+    pendingNote = { id: ev.target.dataset.id, notes: ev.target.value };
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(saveNote, 700);
   });
+  $("#detailPane").addEventListener("focusout", (ev) => { if (ev.target.id === "entNotesBox") saveNote(); });
 }
 
 async function act(name, ids, el) {

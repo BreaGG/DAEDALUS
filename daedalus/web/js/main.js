@@ -319,7 +319,27 @@ function wireToolbar() {
   });
 }
 
+// narrow windows fold the palette into its icon rail without overwriting the saved preference
+const narrow = matchMedia("(max-width: 1100px)");
+
+function setPaletteCollapsed(on, remember = true) {
+  $("#palette").classList.toggle("collapsed", on);
+  $("#workspace").classList.toggle("palette-collapsed", on);
+  const btn = $("#paletteToggle");
+  btn.innerHTML = uiIcon(on ? "expand" : "collapse");
+  btn.dataset.i18nTitle = on ? "palette_expand" : "palette_collapse";
+  btn.title = t(btn.dataset.i18nTitle);
+  if (remember) store.set("paletteCollapsed", on);
+}
+
 function wirePalette() {
+  const fromPrefs = () => setPaletteCollapsed(narrow.matches || !!store.get("paletteCollapsed", false), false);
+  fromPrefs();
+  narrow.addEventListener("change", fromPrefs);
+  $("#paletteToggle").addEventListener("click", () => {
+    const on = !$("#palette").classList.contains("collapsed");
+    setPaletteCollapsed(on, !narrow.matches);
+  });
   $("#paletteFilter").addEventListener("input", debounce(renderPalette, 120));
   $("#paletteList").addEventListener("dragstart", (ev) => {
     const item = ev.target.closest("[data-type]");
@@ -460,6 +480,11 @@ function wireConsole() {
 }
 
 function wireKeys() {
+  // Delete/Backspace only remove entities right after working in the graph, never because focus slipped out of a field
+  let inGraph = false;
+  document.addEventListener("pointerdown", (ev) => {
+    if (!ev.target.closest("dialog, #ctxMenu")) inGraph = !!ev.target.closest("#cy");
+  }, true);
   document.addEventListener("keydown", (ev) => {
     const typing = ev.target.closest("input, textarea, select, [contenteditable]") || document.querySelector("dialog[open]");
     if (ev.key === "Escape") {
@@ -472,7 +497,7 @@ function wireKeys() {
       return;
     }
     if (typing || S.tab !== "graph") return;
-    if ((ev.key === "Delete" || ev.key === "Backspace") && S.selection.length) {
+    if ((ev.key === "Delete" || ev.key === "Backspace") && S.selection.length && inGraph) {
       ev.preventDefault();
       A.deleteEntities([...S.selection], { ask: S.selection.length > 1 }).catch((e) => toast(e.message, "error"));
     } else if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "a") {

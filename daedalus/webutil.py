@@ -168,12 +168,24 @@ except (dns.resolver.NoResolverConfiguration, OSError):
     pass
 
 
+class DNSUnavailable(Exception):
+    """The name servers gave no usable answer. Unlike NXDOMAIN, this says nothing about the name itself."""
+
+    def __init__(self, timeout: bool):
+        self.timeout = timeout
+        super().__init__("DNS lookup failed: " + ("timed out" if timeout else "no name server answered"))
+
+
 def _resolve(name: str, rtype: str) -> list[str]:
     try:
         return [r.to_text().strip('"') for r in _resolver.resolve(name, rtype)]
-    except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer, dns.resolver.NoNameservers, dns.exception.Timeout,
-            dns.name.EmptyLabel, dns.name.LabelTooLong, dns.resolver.YXDOMAIN):
+    except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer, dns.name.EmptyLabel, dns.name.LabelTooLong,
+            dns.resolver.YXDOMAIN):
         return []
+    except dns.resolver.NoNameservers as e:
+        raise DNSUnavailable(timeout=False) from e
+    except dns.exception.Timeout as e:
+        raise DNSUnavailable(timeout=True) from e
 
 
 async def resolve(name: str, rtype: str) -> list[str]:
@@ -185,4 +197,9 @@ async def reverse_dns(ip: str) -> list[str]:
         name = dns.reversename.from_address(ip).to_text()
     except (dns.exception.SyntaxError, ValueError):
         return []
-    return [h.rstrip(".") for h in await resolve(name, "PTR")]
+    try:
+        return [h.rstrip(".") for h in await resolve(name, "PTR")]
+    except DNSUnavailable as e:
+        if e.timeout:
+            raise
+        return []  # reverse zones are often delegated to servers that refuse to answer: no PTR

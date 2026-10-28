@@ -449,6 +449,7 @@ pip install -e ".[dev]"
 pytest -q                      # 80+ tests; every HTTP call is mocked, no network needed
 ruff check daedalus tests      # lint
 python scripts/gen_docs.py     # regenerate docs/*/transforms.md after changing transforms or machines
+python scripts/smoke_live.py   # every transform against real public targets (needs internet, a few minutes)
 ```
 
 CI (GitHub Actions) runs ruff and pytest on Python 3.11, 3.12 and 3.13. Repository layout:
@@ -458,6 +459,7 @@ daedalus/            application package (backend + web/)
 docs/                user guide, technical docs, generated reference, screenshots
 examples/            demo investigation and an example plugin
 scripts/gen_docs.py  reference generator
+scripts/smoke_live.py  live check of every transform against the real sources
 tests/               pytest suite
 Dockerfile, docker-compose.yml, railway.toml, start.sh, start.bat
 ```

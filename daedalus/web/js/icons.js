@@ -50,6 +50,8 @@ const U = {
   down: '<path d="m6 9 6 6 6-6"/>',
   up: '<path d="m6 15 6-6 6 6"/>',
   right: '<path d="m9 6 6 6-6 6"/>',
+  collapse: '<rect x="3.5" y="4.5" width="17" height="15" rx="1"/><path d="M9.5 4.5v15M16 9.5 13.5 12l2.5 2.5"/>',
+  expand: '<rect x="3.5" y="4.5" width="17" height="15" rx="1"/><path d="M9.5 4.5v15M13.5 9.5 16 12l-2.5 2.5"/>',
   thread: '<circle cx="5" cy="19" r="2"/><circle cx="19" cy="5" r="2"/><path d="M6.5 17.5C10 15 7 11 11 9.5s4.5-2 6.5-3"/>',
   graph: '<circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M10.9 7.1 6.1 15.9M13.1 7.1l4.8 8.8M7.3 18h9.4"/>',
   edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',

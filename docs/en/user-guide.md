@@ -60,7 +60,7 @@ the REST API and extending DAEDALUS, see the [technical documentation](technical
 | Area | Where | What for |
 |---|---|---|
 | **Top bar** | top | Investigation selector, **+ New**, **⋯** (rename / delete), the quick-add bar, **Import**, **Export**, language switch and **Settings**. |
-| **Entity palette** | left | Every entity type you can create (with how many the case has), the list of **machines** and the **image** drop zone. |
+| **Entity palette** | left | Every entity type you can create (with how many the case has), the list of **machines** and the **image** drop zone. The button next to its title folds it into a rail of type icons (still clickable and draggable); on windows narrower than 1100 px it starts folded. |
 | **Toolbar** | above the canvas | View tabs (**Graph, Table, Map, Timeline, Notes**), layout selector, **Re-layout**, **auto** layout, **Ariadne's thread**, **Analysis** and the graph search box. |
 | **Canvas** | centre | The graph. The **Types** box (top left) lists the entity types present and lets you hide them; the bottom-left bar has zoom, **Fit**, **PNG**, link **labels** and counters. |
 | **Inspector** | right | **Detail** of the selected entity (properties, links, dates, connections, notes, history) and the **Transforms** panel. |

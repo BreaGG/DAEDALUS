@@ -465,6 +465,7 @@ pip install -e ".[dev]"
 pytest -q                      # más de 80 tests; todo el HTTP está simulado, no hace falta red
 ruff check daedalus tests      # lint
 python scripts/gen_docs.py     # regenera docs/*/transforms.md tras cambiar transforms o máquinas
+python scripts/smoke_live.py   # todos los transforms contra objetivos públicos reales (requiere internet, unos minutos)
 ```
 
 La integración continua (GitHub Actions) ejecuta ruff y pytest en Python 3.11, 3.12 y 3.13. Estructura del
@@ -475,6 +476,7 @@ daedalus/            paquete de la aplicación (backend + web/)
 docs/                guía de usuario, documentación técnica, referencia generada, capturas
 examples/            investigación de demostración y un plugin de ejemplo
 scripts/gen_docs.py  generador de la referencia
+scripts/smoke_live.py  prueba en vivo de todos los transforms contra las fuentes reales
 tests/               tests de pytest
 Dockerfile, docker-compose.yml, railway.toml, start.sh, start.bat
 ```

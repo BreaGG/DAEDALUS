@@ -24,10 +24,11 @@ from pydantic import BaseModel, Field
 from . import __version__, graphalgo
 from .config import LANGUAGES, WEB_DIR, Settings, default_data_dir
 from .engine import Engine
-from .entities import CATEGORIES, ENTITY_TYPES, detect_type, entity_id, normalize
+from .entities import CATEGORIES, ENTITY_TYPES, detect_type, entity_id, latlon, normalize
 from .exif import analyze_image
 from .store import Store
 from .transforms import MACHINES, REGISTRY, TRANSFORM_CATEGORIES, load_plugins
+from .transforms.location import map_links
 
 
 class CaseIn(BaseModel):
@@ -262,6 +263,9 @@ def create_app(data_dir: Path | None = None, transport: httpx.AsyncBaseTransport
         parent = entity_or_404(case_id, body.parent) if body.parent else None
         props = dict(body.props or {})
         props.setdefault("_sources", ["Manual"])
+        coords = latlon(value) if etype == "location" else None
+        if coords and props.get("_lat") is None:  # typed coordinates go straight onto the map
+            props.update({"_lat": coords[0], "_lon": coords[1], "_links": map_links(*coords)})
         ent, created = store.upsert_entity(case_id, etype, value, props, root=not parent)
         if body.notes is not None:
             ent = store.update_entity(case_id, ent["id"], notes=body.notes)
