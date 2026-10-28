@@ -191,7 +191,7 @@ Tablas SQLite (las crea `store.py`):
 | `links` | `(case_id, src, dst, label)` | `transform` (qué transform lo creó, o `manual`), `created` |
 | `runs` | `id` | `case_id`, `entity_id`, `transform`, `status`, `message`, `found`, `started`, `finished` |
 
-**Los identificadores de entidad** son `tipo:valor` tras normalizar (`domain:example.com`, `email:jane@example.com`).
+**Los identificadores de entidad** son `tipo:valor` tras normalizar (`domain:example.com`, `email:daedalusintelligence@gmail.com`).
 La normalización pasa a minúsculas correos, dominios, alias y hashes, canoniza IPs y CIDR, quita el formato de los
 teléfonos, etcétera; los tipos de texto libre (persona, organización, ubicación, frase, cuenta, url) se comparan sin
 distinguir mayúsculas. Añadir una entidad que ya existe fusiona sus propiedades en lugar de duplicarla. Un enlace es
@@ -245,10 +245,10 @@ desconocido), 413 (subida demasiado grande) o 422 (validación del esquema).
 
 ```jsonc
 // entidad
-{"id": "email:jane@example.com", "type": "email", "value": "jane@example.com", "label": "jane@example.com",
+{"id": "email:daedalusintelligence@gmail.com", "type": "email", "value": "daedalusintelligence@gmail.com", "label": "daedalusintelligence@gmail.com",
  "props": {"_sources": ["Manual"]}, "notes": "", "bookmark": "", "root": true, "created": 1792757057.3, "updated": 1792757057.3}
 // enlace
-{"src": "username:jane", "dst": "email:jane@example.com", "label": "public email", "transform": "github_profile"}
+{"src": "username:daedalusintelligence", "dst": "email:daedalusintelligence@gmail.com", "label": "public email", "transform": "github_profile"}
 // ejecución
 {"id": 7, "case_id": 1, "entity_id": "ip:203.0.113.9", "transform": "shodan_internetdb", "status": "ok",
  "message": "2 result(s)", "found": 2, "started": 1792757060.1, "finished": 1792757061.4}

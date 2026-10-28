@@ -14,7 +14,7 @@ Every node in the graph is an entity of one of these types. Types with an exampl
 |---|---|---|---|---|
 | Person | `person` | Identity | yes | `John Smith` |
 | Alias | `username` | Identity | yes | `teolabrys` |
-| Email address | `email` | Identity | yes | `jane@example.com` |
+| Email address | `email` | Identity | yes | `daedalusintelligence@gmail.com` |
 | Phone number | `phone` | Identity | yes | `+34 612 345 678` |
 | Online account | `account` | Identity | yes | palette / menu only |
 | Organization | `organization` | Identity | yes | palette / menu only |

@@ -26,7 +26,7 @@ CREATED_BY = {
 
 # what you can type in the quick-add bar to get each type (auto-detection)
 EXAMPLES = {
-    "person": "John Smith", "username": "teolabrys", "email": "jane@example.com", "phone": "+34 612 345 678",
+    "person": "John Smith", "username": "teolabrys", "email": "daedalusintelligence@gmail.com", "phone": "+34 612 345 678",
     "account": "", "organization": "", "domain": "example.com", "hostname": "mail.example.com",
     "ip": "203.0.113.17", "netblock": "203.0.113.0/24", "asn": "AS64500", "url": "https://example.com/about",
     "tracking_code": "G-ABCD123456", "location": "40.4168, -3.7038", "crypto": "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4",

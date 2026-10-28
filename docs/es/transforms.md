@@ -14,7 +14,7 @@ Cada nodo del grafo es una entidad de uno de estos tipos. Los que tienen ejemplo
 |---|---|---|---|---|
 | Persona | `person` | Identidad | sí | `John Smith` |
 | Alias | `username` | Identidad | sí | `teolabrys` |
-| Correo | `email` | Identidad | sí | `jane@example.com` |
+| Correo | `email` | Identidad | sí | `daedalusintelligence@gmail.com` |
 | Teléfono | `phone` | Identidad | sí | `+34 612 345 678` |
 | Cuenta online | `account` | Identidad | sí | sólo desde paleta / menú |
 | Organización | `organization` | Identidad | sí | sólo desde paleta / menú |
