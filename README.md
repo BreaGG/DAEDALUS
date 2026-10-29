@@ -30,6 +30,7 @@ Created by **Alejandro Brea** · [Leer en español](README.es.md)
 - [Extending](#extending)
 - [Under the hood](#under-the-hood)
 - [Ethics](#ethics)
+- [Disclaimer](#disclaimer)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -169,6 +170,19 @@ DAEDALUS only collects what public sources and the services you configure return
 hurt people when misused. Use it for security research, threat intelligence, journalism, due diligence or to audit your
 own exposure. Do not use it to stalk, harass or profile individuals without a lawful basis, and respect
 data-protection law and the terms of every source you query.
+
+## Disclaimer
+
+DAEDALUS is provided for lawful research, educational and defensive purposes only. You are solely responsible for how
+you use it and for making sure that every investigation complies with the laws of your jurisdiction (including
+data-protection rules such as the GDPR), the terms of service of each source and API you query, and any authorization
+your work requires. The author and contributors accept no liability for misuse of the software or for any damage,
+legal claim or loss arising from its use.
+
+Results come from third-party sources and automated heuristics: they can be incomplete, outdated or simply wrong.
+Verify findings independently before acting on them, and never treat a link in the graph as proof on its own.
+DAEDALUS is an independent project and is not affiliated with, endorsed by or sponsored by Maltego or any of the
+services it queries; all trademarks belong to their respective owners.
 
 ## Contributing
 

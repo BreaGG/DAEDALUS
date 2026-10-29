@@ -31,6 +31,7 @@ Creado por **Alejandro Brea** · [Read in English](README.md)
 - [Ampliarlo](#ampliarlo)
 - [Por dentro](#por-dentro)
 - [Ética](#ética)
+- [Aviso legal](#aviso-legal)
 - [Contribuir](#contribuir)
 - [Licencia](#licencia)
 
@@ -172,6 +173,19 @@ DAEDALUS sólo recoge lo que devuelven las fuentes públicas y los servicios que
 automatiza pueden hacer daño si se usan mal. Úsalo para investigación de seguridad, inteligencia de amenazas,
 periodismo, diligencia debida o para auditar tu propia exposición. No lo uses para vigilar, acosar o perfilar a
 personas sin base legal, y respeta la normativa de protección de datos y los términos de cada fuente que consultes.
+
+## Aviso legal
+
+DAEDALUS se ofrece únicamente con fines de investigación lícita, educativos y defensivos. Eres el único responsable de
+cómo lo usas y de que cada investigación cumpla las leyes de tu jurisdicción (incluida la normativa de protección de
+datos, como el RGPD), los términos de servicio de cada fuente y API que consultes y cualquier autorización que tu
+trabajo requiera. El autor y los colaboradores no asumen responsabilidad alguna por el mal uso del software ni por los
+daños, reclamaciones legales o pérdidas derivados de su uso.
+
+Los resultados proceden de fuentes de terceros y de heurísticas automáticas: pueden ser incompletos, estar desfasados o
+ser sencillamente erróneos. Verifica los hallazgos por tu cuenta antes de actuar y nunca tomes un enlace del grafo como
+prueba por sí solo. DAEDALUS es un proyecto independiente y no está afiliado, respaldado ni patrocinado por Maltego ni
+por ninguno de los servicios que consulta; todas las marcas pertenecen a sus respectivos propietarios.
 
 ## Contribuir
 
